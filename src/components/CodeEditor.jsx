@@ -1,18 +1,9 @@
 import React from 'react'
 import Editor from '@monaco-editor/react';
+import themeOptions from '../constants/themeOptions';
+import languageOptions from '../constants/languageOptions';
 
-const themeOptions = [
-    { label: 'Light', value: 'light' },
-    { label: 'Dark', value: 'vs-dark' },
-    { label: 'High Contrast', value: 'hc-black' }
-];
 
-const languageOptions = [
-    { label: 'JavaScript', value: 'javascript' },
-    { label: 'Python', value: 'python' },
-    { label: 'Java', value: 'java' },
-    // Add more languages as needed
-];
 
 const EditorConfig = ({ handleLanguageChange, handleThemeChange, selectedLanguage, selectedTheme }) => {
 
@@ -22,15 +13,15 @@ const EditorConfig = ({ handleLanguageChange, handleThemeChange, selectedLanguag
                 <label className='form-label' htmlFor="languageSelect">Select Language:</label>
                 <select className='form-select bg-dark text-light' id="languageSelect" onChange={handleLanguageChange} value={selectedLanguage}>
                     {languageOptions.map(option => (
-                        <option key={option.value} value={option.value}>{option.label}</option>
-                    ))}
+                        <option key={option.id} name={option.value} value={option.value}>{option.label}</option>
+                    ))} 
                 </select>
             </div>
             <div className='me-4'>
                 <label className='form-label' htmlFor="themeSelect">Select Theme:</label>
                 <select className='form-select bg-dark text-light' id="themeSelect" onChange={handleThemeChange} value={selectedTheme}>
                     {themeOptions.map(option => (
-                        <option key={option.value} value={option.value}>{option.label}</option>
+                        <option key={option.id} value={option.value}>{option.label}</option>
                     ))}
                 </select>
             </div>
