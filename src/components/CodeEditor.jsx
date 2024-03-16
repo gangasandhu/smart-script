@@ -2,6 +2,7 @@ import React from 'react'
 import Editor from '@monaco-editor/react';
 import themeOptions from '../constants/themeOptions';
 import languageOptions from '../constants/languageOptions';
+import { Link } from 'react-router-dom';
 
 
 
@@ -14,7 +15,7 @@ const EditorConfig = ({ handleLanguageChange, handleThemeChange, selectedLanguag
                 <select className='form-select bg-dark text-light' id="languageSelect" onChange={handleLanguageChange} value={selectedLanguage}>
                     {languageOptions.map(option => (
                         <option key={option.id} name={option.value} value={option.value}>{option.label}</option>
-                    ))} 
+                    ))}
                 </select>
             </div>
             <div className='me-4'>
@@ -44,7 +45,7 @@ const CodeEditor = ({ handleLanguageChange, selectedLanguage, handleThemeChange,
                         selectedLanguage={selectedLanguage}
                         selectedTheme={selectedTheme}
                     />
-                    <button className='btn btn-success '>AskAI</button>
+                    <Link className='btn btn-success' to="/chat">AskAI</Link>
                     <button className='btn btn-primary' onClick={runCode}>Run</button>
                 </div>
                 <Editor

@@ -7,3 +7,4 @@
 2. execute command: npm install
 3. create a .env with key-value pairs from .env.sample file but put your api keys.
 4. Run the app with 'npm run dev' command
+
