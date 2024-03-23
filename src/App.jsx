@@ -21,10 +21,10 @@ function App() {
       <Header />
       <main>
         <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/chat" element={<Chat />} />
-          <Route path="/docs" element={<Documentation />} />
-          <Route path="/team" element={<Team />} />
+          <Route path="smart-script/" element={<Home />} />
+          <Route path="smart-script/chat" element={<Chat />} />
+          <Route path="smart-script/docs" element={<Documentation />} />
+          <Route path="smart-script/team" element={<Team />} />
         </Routes>
       </main>
 
