@@ -1,32 +1,37 @@
 import React from 'react'
 import Editor from '@monaco-editor/react';
+import Select from 'react-select'
 import themeOptions from '../constants/themeOptions';
 import languageOptions from '../constants/languageOptions';
 import { Link } from 'react-router-dom';
+import { customStyles } from '../constants/customStyles';
 
 
 
-const EditorConfig = ({ handleLanguageChange, handleThemeChange, selectedLanguage, selectedTheme }) => {
+const EditorConfig = ({ handleLanguageChange, handleThemeChange }) => {
 
     return (
         <div className='d-flex mb-4'>
             <div className='me-4'>
                 <label className='form-label' htmlFor="languageSelect">Select Language:</label>
-                <select className='form-select bg-dark text-light' id="languageSelect" onChange={handleLanguageChange} value={selectedLanguage}>
-                    {languageOptions.map(option => (
-                        <option key={option.id} name={option.value} value={option.value}>{option.label}</option>
-                    ))}
-                </select>
+                <Select
+                    placeholder={`Filter By Category`}
+                    options={languageOptions}
+                    styles={customStyles}
+                    defaultValue={languageOptions[0]}
+                    onChange={(selectedOption) => handleLanguageChange(selectedOption)}
+                />
             </div>
             <div className='me-4'>
                 <label className='form-label' htmlFor="themeSelect">Select Theme:</label>
-                <select className='form-select bg-dark text-light' id="themeSelect" onChange={handleThemeChange} value={selectedTheme}>
-                    {themeOptions.map(option => (
-                        <option key={option.id} value={option.value}>{option.label}</option>
-                    ))}
-                </select>
+                <Select
+                    options={themeOptions}
+                    styles={customStyles}
+                    defaultValue={themeOptions[0]}
+                    onChange={(selectedOption) => handleThemeChange(selectedOption)}
+                 />
             </div>
-        </div>
+        </div >
     )
 }
 
@@ -42,16 +47,14 @@ const CodeEditor = ({ handleLanguageChange, selectedLanguage, handleThemeChange,
                     <EditorConfig
                         handleLanguageChange={handleLanguageChange}
                         handleThemeChange={handleThemeChange}
-                        selectedLanguage={selectedLanguage}
-                        selectedTheme={selectedTheme}
                     />
-                    <Link className='btn btn-success' to="/chat">AskAI</Link>
+                    <Link className='btn btn-success' to="./chat">AskAI</Link>
                     <button className='btn btn-primary' onClick={runCode}>Run</button>
                 </div>
                 <Editor
                     height="50vh"
                     width="100%"
-                    defaultLanguage={selectedLanguage}
+                    language={selectedLanguage}
                     value={value}
                     theme={selectedTheme}
                     onChange={handleEditorChange}
