@@ -1,8 +1,14 @@
 .chat-box {
-    margin: auto;
+    justify-content: left;
+    flex: auto;
     height: 85vh;
-    width: 50vw;
+    width: 100%;
     background-color: black;
     color: white;
-    padding: 1em;
+    padding: 0.5em;
+    box-sizing: border-box;
+}
+
+.main {
+    width: 100%;
 }

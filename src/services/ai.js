@@ -15,7 +15,7 @@ const processMessageToChatGPT = async (chatMessages) => {
 
     const systemMessage = {
         role: "system",
-        content: "Explain like I am an experienced software developer." // can change this to have chatgpt explain based on context
+        content: "Explain like I am a student learning how to code." // can change this to have chatgpt explain based on context
     };
 
     const apiRequestBody = {
