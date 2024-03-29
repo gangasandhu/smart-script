@@ -49,7 +49,6 @@ const Chat = ({mainTheme}) => {
       <MainContainer
         className={mainTheme !== 'light' && 'main-container shadow'}
       >
-
         <ChatContainer>
           <MessageList
             className={mainTheme !== 'light' && 'message-container'}

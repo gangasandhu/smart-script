@@ -2,7 +2,7 @@ import { render, screen } from '@testing-library/react'
 import Header from '../Header'
 import { BrowserRouter as Router } from 'react-router-dom';
 
-test('renders navigation links correctly', () => {
+test('Renders navigation links correctly', () => {
     render(
         <Router>
             <Header />
