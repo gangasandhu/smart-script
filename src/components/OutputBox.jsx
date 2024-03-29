@@ -2,10 +2,8 @@ import React from 'react'
 import '../styles/output.css'
 
 const OutputBox = ({ outputDetails, processing, theme }) => {
-
     const getOutput = () => {
         let statusId = outputDetails?.status?.id;
-
         if (statusId === 6) {
             // compilation error
             return (
