@@ -6,7 +6,7 @@ import {
 import './styles/App.css'
 import Home from './pages/Home'
 import Chat from './pages/Chat'
-import './styles/darkly.min.css'
+import 'bootswatch/dist/darkly/bootstrap.min.css' 
 import Header from './components/Header'
 import Footer from './components/Footer'
 import Documentation from './pages/Documentation'

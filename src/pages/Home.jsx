@@ -4,6 +4,9 @@ import OutputBox from '../components/OutputBox';
 import { getOutputStatus, getOutputToken } from '../services/compileApi';
 import languageOptions from '../constants/languageOptions';
 
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 const Home = () => {
 
   // code editor variables
@@ -66,19 +69,58 @@ const Home = () => {
         return;
       } else {
         setProcessing(false);
-        const out = atob(response.data.stdout)
-        setOutputDetails(out);
-        console.log("Output", out);
+        // const out = atob(response.data.stdout)
+        setOutputDetails(response.data);
+        showSuccessToast(`Compiled Successfully!`);
+        console.log("Output", response.data);
         return;
       }
     } catch (error) {
       console.error(error);
       setProcessing(false)
+      showErrorToast();
     }
   }
 
+  // message after successfully compiling the code
+  const showSuccessToast = (msg) => {
+    toast.success(msg || `Compiled Successfully!`, {
+      position: "top-right",
+      autoClose: 1000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
+  };
+
+  // message for error in compilation
+  const showErrorToast = (msg, timer) => {
+    toast.error(msg || `Something went wrong! Please try again.`, {
+      position: "top-right",
+      autoClose: timer ? timer : 1000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
+  };
+
   return (
     <div>
+      <ToastContainer
+        position="top-right"
+        autoClose={2000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
       <CodeEditor
         handleEditorChange={handleEditorChange}
         handleThemeChange={handleThemeChange}
