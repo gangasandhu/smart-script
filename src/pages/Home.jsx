@@ -69,10 +69,10 @@ const Home = () => {
         return;
       } else {
         setProcessing(false);
-        const out = atob(response.data.stdout)
-        setOutputDetails(out);
+        // const out = atob(response.data.stdout)
+        setOutputDetails(response.data);
         showSuccessToast(`Compiled Successfully!`);
-        console.log("Output", out);
+        console.log("Output", response.data);
         return;
       }
     } catch (error) {
