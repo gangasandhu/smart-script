@@ -42,11 +42,11 @@ const processMessageToChatGPT = async (chatMessages) => {
     }
 };
 
-const getAiSuggestion = async (code) => {
+const getAiSuggestion = async (code, language) => {
 
     const systemMessage = {
         role: "system",
-        content: `Give me code suggestion for the following code. Only give the actual code in response no human language. Here is the code: ${code}`, 
+        content: `Give me code suggestion for the following code in ${language}. Only give the actual code in response no human language. Here is the code: ${code}`, 
     };
 
     const apiRequestBody = {

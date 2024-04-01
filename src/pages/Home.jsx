@@ -8,6 +8,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import AiEditor from '../components/AiEditor';
 import { getAiSuggestion } from '../services/ai';
+import EditorConfig from '../components/EditorConfig';
 
 const Home = () => {
 
@@ -118,13 +119,17 @@ const Home = () => {
   const getCodeSuggestion = async () => {
     setShowSuggestion(true);
     const code = value;
-    const aiCode = await getAiSuggestion(code)
+    const aiCode = await getAiSuggestion(code, selectedLanguage)
     setAiValue(aiCode)
-    
+
     console.log(aiCode);
   }
-  
+
   const closeAi = () => setShowSuggestion(false);
+  const copyText = () => {
+    navigator.clipboard.writeText(aiValue);
+    showSuccessToast("Copied")
+}
 
   return (
     <div>
@@ -139,25 +144,31 @@ const Home = () => {
         draggable
         pauseOnHover
       />
+      <div className='d-flex justify-content-between align-items-center'>
+        <EditorConfig
+          handleLanguageChange={handleLanguageChange}
+          handleThemeChange={handleThemeChange}
+        />
+        <div>
+          <button className='btn btn-success me-2' onClick={getCodeSuggestion}>AskAI</button>
+          <button className='btn btn-primary' onClick={runCode}>Run</button>
+        </div>
+      </div>
       <div>
+        {showSuggestion &&
+          <AiEditor
+            selectedLanguage={selectedLanguage.value}
+            selectedTheme={selectedTheme}
+            aiValue={aiValue}
+            closeAi={closeAi}
+            copyText={copyText}
+          />}
         <CodeEditor
           handleEditorChange={handleEditorChange}
-
-          handleThemeChange={handleThemeChange}
-          handleLanguageChange={handleLanguageChange}
           selectedLanguage={selectedLanguage.value}
           selectedTheme={selectedTheme}
-          runCode={runCode}
           value={value}
-          getCodeSuggestion={getCodeSuggestion}
         />
-        {showSuggestion && <AiEditor
-
-          selectedLanguage={selectedLanguage.value}
-          selectedTheme={selectedTheme}
-          aiValue={aiValue}
-          closeAi={closeAi}
-        />}
 
       </div>
       <OutputBox
