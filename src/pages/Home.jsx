@@ -6,16 +6,22 @@ import languageOptions from '../constants/languageOptions';
 
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import AiEditor from '../components/AiEditor';
+import { getAiSuggestion } from '../services/ai';
 
 const Home = () => {
 
-  // code editor variables
+  // code editor states
   const [value, setValue] = useState("// write your code here");
   const [selectedTheme, setSelectedTheme] = useState('vs-dark');
   const [selectedLanguage, setSelectedLanguage] = useState(languageOptions[0])
   const [processing, setProcessing] = useState(null);
   const [customInput, setCustomInput] = useState("");
-  const [outputDetails, setOutputDetails] = useState("")
+  const [outputDetails, setOutputDetails] = useState("");
+
+  // AI suggestion states
+  const [showSuggestion, setShowSuggestion] = useState(false);
+  const [aiValue, setAiValue] = useState("");
 
   const handleEditorChange = (value) => {
     // set the value of the code inside the editor
@@ -108,6 +114,18 @@ const Home = () => {
     });
   };
 
+  // get code suggestion from openai api
+  const getCodeSuggestion = async () => {
+    setShowSuggestion(true);
+    const code = value;
+    const aiCode = await getAiSuggestion(code)
+    setAiValue(aiCode)
+    
+    console.log(aiCode);
+  }
+  
+  const closeAi = () => setShowSuggestion(false);
+
   return (
     <div>
       <ToastContainer
@@ -121,16 +139,27 @@ const Home = () => {
         draggable
         pauseOnHover
       />
-      <CodeEditor
-        handleEditorChange={handleEditorChange}
-        
-        handleThemeChange={handleThemeChange}
-        handleLanguageChange={handleLanguageChange}
-        selectedLanguage={selectedLanguage.value}
-        selectedTheme={selectedTheme}
-        runCode={runCode}
-        value={value}
-      />
+      <div>
+        <CodeEditor
+          handleEditorChange={handleEditorChange}
+
+          handleThemeChange={handleThemeChange}
+          handleLanguageChange={handleLanguageChange}
+          selectedLanguage={selectedLanguage.value}
+          selectedTheme={selectedTheme}
+          runCode={runCode}
+          value={value}
+          getCodeSuggestion={getCodeSuggestion}
+        />
+        {showSuggestion && <AiEditor
+
+          selectedLanguage={selectedLanguage.value}
+          selectedTheme={selectedTheme}
+          aiValue={aiValue}
+          closeAi={closeAi}
+        />}
+
+      </div>
       <OutputBox
         outputDetails={outputDetails}
         processing={processing}

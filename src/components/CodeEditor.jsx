@@ -36,7 +36,7 @@ const EditorConfig = ({ handleLanguageChange, handleThemeChange }) => {
 }
 
 
-const CodeEditor = ({ handleLanguageChange, selectedLanguage, handleThemeChange, selectedTheme, handleEditorChange, runCode, value }) => {
+const CodeEditor = ({ handleLanguageChange, selectedLanguage, handleThemeChange, selectedTheme, handleEditorChange, runCode, value, getCodeSuggestion }) => {
     return (
         <div>
 
@@ -48,7 +48,7 @@ const CodeEditor = ({ handleLanguageChange, selectedLanguage, handleThemeChange,
                         handleLanguageChange={handleLanguageChange}
                         handleThemeChange={handleThemeChange}
                     />
-                    <Link className='btn btn-success' to="./chat">AskAI</Link>
+                    <button className='btn btn-success' onClick={getCodeSuggestion}>AskAI</button>
                     <button className='btn btn-primary' onClick={runCode}>Run</button>
                 </div>
                 <Editor
