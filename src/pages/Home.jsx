@@ -47,7 +47,6 @@ const Home = ({mainTheme, changeMainTheme}) => {
     console.log("code: ", value)
     setOutputDetails("")
     await compileCode(value, selectedLanguage.id, customInput)
-
   }
 
   // compile code and generate an output token

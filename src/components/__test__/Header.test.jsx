@@ -9,11 +9,9 @@ test('Renders navigation links correctly', () => {
         </Router>
     )
 
-    // Check if the brand logo is present and contains the correct text
     const brandElement = screen.getByText('SmartScript');
     expect(brandElement).toBeDefined();
 
-    // Check if the navigation links are present and contain the correct text
     const homeLink = screen.getByText('Home');
     expect(homeLink).toBeDefined();
 
