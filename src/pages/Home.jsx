@@ -123,6 +123,7 @@ const Home = () => {
       />
       <CodeEditor
         handleEditorChange={handleEditorChange}
+        
         handleThemeChange={handleThemeChange}
         handleLanguageChange={handleLanguageChange}
         selectedLanguage={selectedLanguage.value}
