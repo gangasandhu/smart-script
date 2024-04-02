@@ -174,6 +174,7 @@ const Home = () => {
           <OutputBox
             outputDetails={outputDetails}
             processing={processing}
+            theme={selectedTheme}
           />
         </div>
       </div>

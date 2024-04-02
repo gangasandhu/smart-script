@@ -17,7 +17,7 @@ const Header = () => {
                             </Link>
                         </li>
                         <li className="nav-item">
-                            <Link className="nav-link" to="smart-script/chat">Ask AI</Link>
+                            <Link className="nav-link" to="smart-script/chat">Chat AI</Link>
                         </li>
                         <li className="nav-item">
                             <Link className="nav-link" to="smart-script/docs">documentation</Link>
