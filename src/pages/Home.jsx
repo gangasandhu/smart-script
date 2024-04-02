@@ -9,6 +9,7 @@ import "react-toastify/dist/ReactToastify.css";
 import AiEditor from '../components/AiEditor';
 import { getAiSuggestion } from '../services/ai';
 import EditorConfig from '../components/EditorConfig';
+import '../styles/home.css'
 
 const Home = ({mainTheme, changeMainTheme}) => {
 
@@ -145,13 +146,13 @@ const Home = ({mainTheme, changeMainTheme}) => {
         draggable
         pauseOnHover
       />
-      <div className='d-flex justify-content-between align-items-center'>
+      <div className='editor-bar d-flex justify-content-between align-items-center m-4'>
         <EditorConfig
           theme={mainTheme}
           handleLanguageChange={handleLanguageChange}
           handleThemeChange={handleThemeChange}
         />
-        <div>
+        <div className='cta'>
           <button className='btn btn-success me-2' onClick={getCodeSuggestion}>AskAI</button>
           <button className='btn btn-primary' onClick={runCode}>Run</button>
         </div>

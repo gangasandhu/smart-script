@@ -2,14 +2,14 @@ import React from 'react'
 import Select from 'react-select'
 import themeOptions from '../constants/themeOptions';
 import languageOptions from '../constants/languageOptions';
-import { Link } from 'react-router-dom';
 import { customStyles } from '../constants/customStyles';
+import '../styles/editor-config.css' 
 
 
 const EditorConfig = ({ theme, handleLanguageChange, handleThemeChange }) => {
 
     return (
-        <div className='d-flex mb-4'>
+        <div className='editor-config d-flex mb-4'>
             <div className='me-4'>
                 <label className={`form-label ${theme == 'light' ? 'text-black' : 'text-white'}`} htmlFor="languageSelect">Select Language:</label>
                 <Select
