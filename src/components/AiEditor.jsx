@@ -15,7 +15,7 @@ const AiEditor = ({ selectedLanguage, selectedTheme, aiValue, closeAi, copyText 
             </div>
             <hr />
             <Editor
-                height="40vh"
+                height="35vh"
                 width="100%"
                 language={selectedLanguage}
                 value={aiValue}

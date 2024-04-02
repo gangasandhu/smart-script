@@ -129,7 +129,7 @@ const Home = () => {
   const copyText = () => {
     navigator.clipboard.writeText(aiValue);
     showSuccessToast("Copied")
-}
+  }
 
   return (
     <div>
@@ -154,27 +154,30 @@ const Home = () => {
           <button className='btn btn-primary' onClick={runCode}>Run</button>
         </div>
       </div>
-      <div>
-        {showSuggestion &&
-          <AiEditor
+      {showSuggestion && <AiEditor
+        selectedLanguage={selectedLanguage.value}
+        selectedTheme={selectedTheme}
+        aiValue={aiValue}
+        closeAi={closeAi}
+        copyText={copyText}
+      />}
+      <div className='row'>
+        <div className='col-lg-8 col-md-8 col-sm-12'>
+          <CodeEditor
+            handleEditorChange={handleEditorChange}
             selectedLanguage={selectedLanguage.value}
             selectedTheme={selectedTheme}
-            aiValue={aiValue}
-            closeAi={closeAi}
-            copyText={copyText}
-          />}
-        <CodeEditor
-          handleEditorChange={handleEditorChange}
-          selectedLanguage={selectedLanguage.value}
-          selectedTheme={selectedTheme}
-          value={value}
-        />
-
+            value={value}
+          />
+        </div>
+        <div className='col-lg-4 col-md-4 col-sm-12'>
+          <OutputBox
+            outputDetails={outputDetails}
+            processing={processing}
+          />
+        </div>
       </div>
-      <OutputBox
-        outputDetails={outputDetails}
-        processing={processing}
-      />
+
     </div>
   )
 }

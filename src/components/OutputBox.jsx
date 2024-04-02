@@ -38,38 +38,39 @@ const OutputBox = ({ outputDetails, processing }) => {
 
     return (
         <div>
-            <div className='compiler'>
-                <p>Output</p>
-                <hr />
+            <p className='text-secondary text-start mt-4'>Compiler</p>
+            <hr />
+            <div className='compiler bg-dark'>
+
                 $ {processing && "\nCompiling the code..."}
                 <div className='output-window'>
                     {outputDetails ? <>{getOutput()}</> : null}
                 </div>
                 <hr />
 
-            </div>
-            <div className='output-window p-3 bg-secondary'>
+                {outputDetails && <div className='output-window pt-3 bg-dark'>
 
-                <div className='d-flex justify-content-around'>
-                    <p>
-                        Status:{" "}
-                        <span className="text-success">
-                            {outputDetails?.status?.description}
-                        </span>
-                    </p>
-                    <p>
-                        Memory:{" "}
-                        <span className="text-success">
-                            {outputDetails?.memory}
-                        </span>
-                    </p>
-                    <p>
-                        Time:{" "}
-                        <span className="text-success">
-                            {outputDetails?.time}
-                        </span>
-                    </p>
-                </div>
+                    <div className='d-flex justify-content-between'>
+                        <p>
+                            Status:{" "}
+                            <span className="text-success">
+                                {outputDetails?.status?.description}
+                            </span>
+                        </p>
+                        <p>
+                            Memory:{" "}
+                            <span className="text-success">
+                                {outputDetails?.memory}
+                            </span>
+                        </p>
+                        <p>
+                            Time:{" "}
+                            <span className="text-success">
+                                {outputDetails?.time}
+                            </span>
+                        </p>
+                    </div>
+                </div>}
             </div>
         </div>
     )

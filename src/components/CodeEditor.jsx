@@ -10,7 +10,7 @@ const CodeEditor = ({ selectedLanguage, selectedTheme, handleEditorChange, value
                 <hr />
                 
                 <Editor
-                    height="50vh"
+                    height="60vh"
                     width="100%"
                     language={selectedLanguage}
                     value={value}
