@@ -6,12 +6,12 @@ import { Link } from 'react-router-dom';
 import { customStyles } from '../constants/customStyles';
 
 
-const EditorConfig = ({ handleLanguageChange, handleThemeChange }) => {
+const EditorConfig = ({ theme, handleLanguageChange, handleThemeChange }) => {
 
     return (
         <div className='d-flex mb-4'>
             <div className='me-4'>
-                <label className='form-label' htmlFor="languageSelect">Select Language:</label>
+                <label className={`form-label ${theme == 'light' ? 'text-black' : 'text-white'}`} htmlFor="languageSelect">Select Language:</label>
                 <Select
                     placeholder={`Filter By Category`}
                     options={languageOptions}
@@ -21,7 +21,7 @@ const EditorConfig = ({ handleLanguageChange, handleThemeChange }) => {
                 />
             </div>
             <div className='me-4'>
-                <label className='form-label' htmlFor="themeSelect">Select Theme:</label>
+            <label className={`form-label ${theme == 'light' ? 'text-black' : 'text-white'}`} htmlFor="themeSelect">Select Theme:</label>
                 <Select
                     options={themeOptions}
                     styles={customStyles}

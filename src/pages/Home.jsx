@@ -10,7 +10,7 @@ import AiEditor from '../components/AiEditor';
 import { getAiSuggestion } from '../services/ai';
 import EditorConfig from '../components/EditorConfig';
 
-const Home = () => {
+const Home = ({mainTheme, changeMainTheme}) => {
 
   // code editor states
   const [value, setValue] = useState("// write your code here");
@@ -32,6 +32,7 @@ const Home = () => {
   const handleThemeChange = (theme) => {
     // set the theme of the editor
     setSelectedTheme(theme.value)
+    changeMainTheme(theme.value)
   }
 
   const handleLanguageChange = (langObj) => {
@@ -146,6 +147,7 @@ const Home = () => {
       />
       <div className='d-flex justify-content-between align-items-center'>
         <EditorConfig
+          theme={mainTheme}
           handleLanguageChange={handleLanguageChange}
           handleThemeChange={handleThemeChange}
         />
@@ -156,7 +158,7 @@ const Home = () => {
       </div>
       {showSuggestion && <AiEditor
         selectedLanguage={selectedLanguage.value}
-        selectedTheme={selectedTheme}
+        selectedTheme={mainTheme}
         aiValue={aiValue}
         closeAi={closeAi}
         copyText={copyText}
@@ -166,7 +168,7 @@ const Home = () => {
           <CodeEditor
             handleEditorChange={handleEditorChange}
             selectedLanguage={selectedLanguage.value}
-            selectedTheme={selectedTheme}
+            selectedTheme={mainTheme}
             value={value}
           />
         </div>
@@ -174,7 +176,7 @@ const Home = () => {
           <OutputBox
             outputDetails={outputDetails}
             processing={processing}
-            theme={selectedTheme}
+            theme={mainTheme}
           />
         </div>
       </div>

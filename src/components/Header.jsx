@@ -1,9 +1,9 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 
-const Header = () => {
+const Header = ({theme}) => {
     return (
-        <nav className="navbar navbar-expand-lg bg-dark" data-bs-theme="dark">
+        <nav className={`navbar navbar-expand-lg ${theme == 'light' ? 'bg-white' : 'bg-dark'}`} data-bs-theme={theme == 'light' ? "light" : "dark"}>
             <div className="container-fluid">
                 <Link className="navbar-brand text-success" to="smart-script/">SmartScript</Link>
                 <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">

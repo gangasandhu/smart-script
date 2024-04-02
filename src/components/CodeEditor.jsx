@@ -6,8 +6,8 @@ const CodeEditor = ({ selectedLanguage, selectedTheme, handleEditorChange, value
         <div>
 
             <div className='shadow'>
-                <p className='text-secondary text-start mt-4'>Code Editor</p>
-                <hr />
+                <p className='text-secondary text-start mt-4 p-2'>Code Editor</p>
+                {/* <hr /> */}
                 
                 <Editor
                     height="60vh"

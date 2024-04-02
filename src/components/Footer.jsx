@@ -1,9 +1,9 @@
 import React from 'react'
 
-const Footer = () => {
+const Footer = ({theme}) => {
   return (
-    <div className='footer bg-dark text-secondary p-4 text-center'>
-      Copyright &copy; {new Date().getFullYear()}. Ganga and Team 9.
+    <div className={`footer ${theme == 'light' ? 'bg-white text-black' : 'bg-dark text-light'} text-secondary p-4 text-center`}>
+      Copyright &copy; {new Date().getFullYear()}. SmartScript - CPSC 2350 Team 9.
     </div>
   )
 }
