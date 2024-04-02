@@ -6,16 +6,23 @@ import languageOptions from '../constants/languageOptions';
 
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import AiEditor from '../components/AiEditor';
+import { getAiSuggestion } from '../services/ai';
+import EditorConfig from '../components/EditorConfig';
 
 const Home = () => {
 
-  // code editor variables
+  // code editor states
   const [value, setValue] = useState("// write your code here");
   const [selectedTheme, setSelectedTheme] = useState('vs-dark');
   const [selectedLanguage, setSelectedLanguage] = useState(languageOptions[0])
   const [processing, setProcessing] = useState(null);
   const [customInput, setCustomInput] = useState("");
-  const [outputDetails, setOutputDetails] = useState("")
+  const [outputDetails, setOutputDetails] = useState("");
+
+  // AI suggestion states
+  const [showSuggestion, setShowSuggestion] = useState(false);
+  const [aiValue, setAiValue] = useState("");
 
   const handleEditorChange = (value) => {
     // set the value of the code inside the editor
@@ -108,6 +115,22 @@ const Home = () => {
     });
   };
 
+  // get code suggestion from openai api
+  const getCodeSuggestion = async () => {
+    setShowSuggestion(true);
+    const code = value;
+    const aiCode = await getAiSuggestion(code, selectedLanguage)
+    setAiValue(aiCode)
+
+    console.log(aiCode);
+  }
+
+  const closeAi = () => setShowSuggestion(false);
+  const copyText = () => {
+    navigator.clipboard.writeText(aiValue);
+    showSuccessToast("Copied")
+  }
+
   return (
     <div>
       <ToastContainer
@@ -121,20 +144,40 @@ const Home = () => {
         draggable
         pauseOnHover
       />
-      <CodeEditor
-        handleEditorChange={handleEditorChange}
-        
-        handleThemeChange={handleThemeChange}
-        handleLanguageChange={handleLanguageChange}
+      <div className='d-flex justify-content-between align-items-center'>
+        <EditorConfig
+          handleLanguageChange={handleLanguageChange}
+          handleThemeChange={handleThemeChange}
+        />
+        <div>
+          <button className='btn btn-success me-2' onClick={getCodeSuggestion}>AskAI</button>
+          <button className='btn btn-primary' onClick={runCode}>Run</button>
+        </div>
+      </div>
+      {showSuggestion && <AiEditor
         selectedLanguage={selectedLanguage.value}
         selectedTheme={selectedTheme}
-        runCode={runCode}
-        value={value}
-      />
-      <OutputBox
-        outputDetails={outputDetails}
-        processing={processing}
-      />
+        aiValue={aiValue}
+        closeAi={closeAi}
+        copyText={copyText}
+      />}
+      <div className='row'>
+        <div className='col-lg-8 col-md-8 col-sm-12'>
+          <CodeEditor
+            handleEditorChange={handleEditorChange}
+            selectedLanguage={selectedLanguage.value}
+            selectedTheme={selectedTheme}
+            value={value}
+          />
+        </div>
+        <div className='col-lg-4 col-md-4 col-sm-12'>
+          <OutputBox
+            outputDetails={outputDetails}
+            processing={processing}
+          />
+        </div>
+      </div>
+
     </div>
   )
 }

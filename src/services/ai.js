@@ -42,4 +42,33 @@ const processMessageToChatGPT = async (chatMessages) => {
     }
 };
 
-export default processMessageToChatGPT;
+const getAiSuggestion = async (code, language) => {
+
+    const systemMessage = {
+        role: "system",
+        content: `Give me code suggestion for the following code in ${language}. Only give the actual code in response no human language. Here is the code: ${code}`, 
+    };
+
+    const apiRequestBody = {
+        "model": "gpt-3.5-turbo",
+        "messages": [
+            systemMessage,
+        ]
+    };
+
+    try {
+        const response = await axios.post("https://api.openai.com/v1/chat/completions", apiRequestBody, {
+            headers: {
+                "Authorization": "Bearer " + API_KEY,
+                "Content-Type": "application/json"
+            }
+        });
+        const data = response.data;
+        console.log(data);
+        return data.choices[0].message.content
+    } catch (error) {
+        // Handle error
+        console.error("Error:", error);
+    }
+};
+export { processMessageToChatGPT, getAiSuggestion };

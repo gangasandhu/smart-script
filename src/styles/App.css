@@ -38,8 +38,9 @@
 }
 
 main {
-  width: 75%;
+  width: 85%;
   margin: auto;
+  padding: 4em 0;
 }
 .read-the-docs {
   color: #888;

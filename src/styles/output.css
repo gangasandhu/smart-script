@@ -1,10 +1,9 @@
 .compiler {
-    height: auto;
-    max-height: 500px;
+    height: 60vh;
     overflow: scroll;
-    margin-top: 2em;
+    /* margin-top: 2em; */
     margin-bottom: 2em;
-    background-color: #333232;
+    /* background-color: #333232; */
     min-height: 20vh;
     color: rgb(255, 255, 255);
     padding: 1em;

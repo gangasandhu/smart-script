@@ -3,7 +3,7 @@ import '../styles/App.css'
 import '../styles/chat.css'
 import '@chatscope/chat-ui-kit-styles/dist/default/styles.min.css'
 import { MainContainer, ChatContainer, MessageList, Message, MessageInput, TypingIndicator } from '@chatscope/chat-ui-kit-react'
-import processMessageToChatGPT from '../services/ai';
+import {processMessageToChatGPT} from '../services/ai';
 
 const Chat = () => {
   const [typing, setTyping] = useState(false);
