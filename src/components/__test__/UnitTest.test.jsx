@@ -1,9 +1,23 @@
 import React from 'react';
 import { render, fireEvent } from '@testing-library/react';
 import Home from '../../pages/Home';
+import Chat from '../../pages/Chat';
 import { MemoryRouter } from 'react-router-dom';
 
-describe("Code Editor - Unit Test", () => {
+describe("Multiple Language Flexibility - Unit Test", () => {
+    it("", async () => {
+        const renderLanguage = render(
+            <MemoryRouter>
+                <Home />
+            </MemoryRouter>
+        );
+
+        const language = await renderLanguage.findByTestId("language");
+        expect(language).toBeDefined();
+    });
+});
+
+describe("Instant Compilation - Unit Test", () => {
     it("should render the code editor properly", async () => {
         const renderEditor = render(
             <MemoryRouter>
@@ -27,19 +41,6 @@ describe("Code Editor - Unit Test", () => {
         const compiler = await renderCompiler.findByTestId("compiler");
         expect(compiler).toBeDefined();
     })
-});
-
-describe("Multiple Language Flexibility - Unit Test", () => {
-    it("", async () => {
-        const renderLanguage = render(
-            <MemoryRouter>
-                <Home />
-            </MemoryRouter>
-        );
-
-        const language = await renderLanguage.findByTestId("language");
-        expect(language).toBeDefined();
-    });
 });
 
 describe("Multiple Themes - Unit Test", () => {
@@ -81,4 +82,38 @@ describe("Multiple Themes - Unit Test", () => {
         fireEvent.change(select, { target: { value: optionSelect.value } });
         expect(handleThemeChange).toHaveBeenCalledWith(optionSelect);
     });*/
+});
+
+describe("Code Suggestions - Unit Test", () => {
+    it("", async () => {
+
+    });
+
+    it("", async () => {
+
+    });
+});
+
+describe("Error Suggestions - Unit Test", () => {
+    it("", async () => {
+
+    });
+
+    it("", async () => {
+
+    });
+});
+
+describe("Chatbot Integration - Unit Test", () => {
+    it("should initialize with the correct initial message", async () => {
+        const renderChat = render(<Chat />);
+        const initialMessage = await renderChat.getByText("Hello, I'm ChatGPT. Feel free to ask me anything!");
+        expect(initialMessage).toBeDefined();
+    });
+
+    it("should render all messages properly", async () => {
+        const renderedChat = render(<Chat />);
+        const message = await renderedChat.findAllByTestId(/^message/);
+        expect(message.length).toEqual(1);
+    });
 });
