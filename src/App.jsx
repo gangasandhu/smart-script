@@ -36,7 +36,7 @@ function App() {
       <main>
         <Routes>
           <Route path="smart-script/" element={<Home mainTheme={mainTheme} changeMainTheme={changeMainTheme} />} />
-          <Route path="smart-script/chat" element={<Chat />} />
+          <Route path="smart-script/chat" element={<Chat mainTheme={mainTheme}/>} />
           <Route path="smart-script/docs" element={<Documentation />} />
           <Route path="smart-script/team" element={<Team />} />
         </Routes>

@@ -1,7 +1,67 @@
 .chat-box {
     margin: auto;
     height: 85vh;
-    width: 50vw;
+    width: 70vw;
     color: white;
     padding: 1em;
+}
+
+.main-container {
+    border: none !important;
+}
+
+.message-container {
+    background-color: #282828 !important;
+}
+
+.cs-message--incoming .cs-message__content {
+    background-color: #d4d4d4 !important;
+    /* color: white !important; */
+}
+
+.cs-message--outgoing .cs-message__content {
+    background-color: #a4a3a3 !important;
+    /* color: white !important; */
+}
+
+.message-input {
+    background-color: #303030 !important;
+    border: none !important;
+    padding: 2em !important;
+    color: white !important;
+}
+
+.message-input-light {
+    padding: 2em !important;
+}
+
+.message-input .cs-message-input__content-editor-wrapper {
+    background-color: white !important;
+}
+.message-input .cs-message-input__content-editor {
+    background-color: white !important;
+}
+
+.message-input-light .cs-message-input__content-editor-wrapper {
+    background-color: rgb(225, 225, 225) !important;
+}
+.message-input-light .cs-message-input__content-editor {
+    background-color: rgb(225, 225, 225) !important;
+}
+
+.message-input .cs-button--attachment {
+    display: none;
+}
+
+.message-input-light .cs-button--attachment {
+    display: none;
+}
+
+.typing {
+    background-color: #282828 !important;
+    color: white !important;
+}
+
+.typing .cs-typing-indicator__text {
+    color: white !important;
 }
