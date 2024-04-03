@@ -9,8 +9,9 @@ import "react-toastify/dist/ReactToastify.css";
 import AiEditor from '../components/AiEditor';
 import { getAiSuggestion } from '../services/ai';
 import EditorConfig from '../components/EditorConfig';
+import '../styles/home.css'
 
-const Home = () => {
+const Home = ({mainTheme, changeMainTheme}) => {
 
   // code editor states
   const [value, setValue] = useState("// write your code here");
@@ -32,6 +33,7 @@ const Home = () => {
   const handleThemeChange = (theme) => {
     // set the theme of the editor
     setSelectedTheme(theme.value)
+    changeMainTheme(theme.value)
   }
 
   const handleLanguageChange = (langObj) => {
@@ -144,19 +146,20 @@ const Home = () => {
         draggable
         pauseOnHover
       />
-      <div className='d-flex justify-content-between align-items-center'>
+      <div className='editor-bar d-flex justify-content-between align-items-center m-4'>
         <EditorConfig
+          theme={mainTheme}
           handleLanguageChange={handleLanguageChange}
           handleThemeChange={handleThemeChange}
         />
-        <div>
+        <div className='cta'>
           <button className='btn btn-success me-2' onClick={getCodeSuggestion}>AskAI</button>
           <button className='btn btn-primary' onClick={runCode}>Run</button>
         </div>
       </div>
       {showSuggestion && <AiEditor
         selectedLanguage={selectedLanguage.value}
-        selectedTheme={selectedTheme}
+        selectedTheme={mainTheme}
         aiValue={aiValue}
         closeAi={closeAi}
         copyText={copyText}
@@ -166,7 +169,7 @@ const Home = () => {
           <CodeEditor
             handleEditorChange={handleEditorChange}
             selectedLanguage={selectedLanguage.value}
-            selectedTheme={selectedTheme}
+            selectedTheme={mainTheme}
             value={value}
           />
         </div>
@@ -174,6 +177,7 @@ const Home = () => {
           <OutputBox
             outputDetails={outputDetails}
             processing={processing}
+            theme={mainTheme}
           />
         </div>
       </div>

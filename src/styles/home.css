@@ -1,0 +1,6 @@
+@media only screen and (max-width: 800px) {
+    .editor-bar {
+        flex-direction: column;
+        text-align: center;
+    }
+}

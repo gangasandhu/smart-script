@@ -1,7 +1,7 @@
 import React from 'react'
 import '../styles/output.css'
 
-const OutputBox = ({ outputDetails, processing }) => {
+const OutputBox = ({ outputDetails, processing, theme }) => {
 
     const getOutput = () => {
         let statusId = outputDetails?.status?.id;
@@ -37,10 +37,9 @@ const OutputBox = ({ outputDetails, processing }) => {
     };
 
     return (
-        <div>
-            <p className='text-secondary text-start mt-4'>Compiler</p>
-            <hr />
-            <div className='compiler bg-dark'>
+        <div className='shadow'>
+            <p className='text-secondary text-start p-2 mt-4'>Compiler</p>
+            <div className={theme == 'light' ? 'compiler bg-white text-dark' : 'compiler bg-dark text-white'}>
 
                 $ {processing && "\nCompiling the code..."}
                 <div className='output-window'>
@@ -48,7 +47,7 @@ const OutputBox = ({ outputDetails, processing }) => {
                 </div>
                 <hr />
 
-                {outputDetails && <div className='output-window pt-3 bg-dark'>
+                {outputDetails && <div className='output-window pt-3'>
 
                     <div className='d-flex justify-content-between'>
                         <p>

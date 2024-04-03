@@ -3,13 +3,13 @@ import '../styles/App.css'
 import '../styles/chat.css'
 import '@chatscope/chat-ui-kit-styles/dist/default/styles.min.css'
 import { MainContainer, ChatContainer, MessageList, Message, MessageInput, TypingIndicator } from '@chatscope/chat-ui-kit-react'
-import {processMessageToChatGPT} from '../services/ai';
+import { processMessageToChatGPT } from '../services/ai';
 
-const Chat = () => {
+const Chat = ({mainTheme}) => {
   const [typing, setTyping] = useState(false);
   const [messages, setMessages] = useState([
     {
-      message: "Hello, I'm ChatGPT. Feel free to ask me anything!",
+      message: "Hello, I'm your personal AI Assitant. Feel free to ask me anything!",
       direction: 'incoming',
       sentTime: "just now",
       sender: "ChatGPT"
@@ -46,19 +46,27 @@ const Chat = () => {
 
   return (
     <div className="chat-box">
-        <MainContainer>
-          <ChatContainer>
-            <MessageList
-              scrollBehavior='smooth'
-              typingIndicator={typing ? <TypingIndicator content="ChatGPT is typing" /> : null}
-            >
-              {messages.map((message, i) => {
-                return <Message key={i} model={message} />
-              })}
-            </MessageList>
-            <MessageInput placeholder='Type message here' onSend={handleSend} />
-          </ChatContainer>
-        </MainContainer>
+      <MainContainer
+        className={mainTheme !== 'light' && 'main-container shadow'}
+      >
+
+        <ChatContainer>
+          <MessageList
+            className={mainTheme !== 'light' && 'message-container'}
+            scrollBehavior='smooth'
+            typingIndicator={typing ? <TypingIndicator className='typing' content="ChatGPT is typing" /> : null}
+          >
+            {messages.map((message, i) => {
+              if (mainTheme == 'light')
+                return <Message key={i} model={message} /> 
+              else 
+                return <Message className={`cs-message--${message.direction} cs-message__content`} key={i} model={message} />
+             
+            })}
+          </MessageList>
+          <MessageInput className={mainTheme !== 'light' ? 'message-input shadow' : 'message-input-light'} placeholder='Type message here' onSend={handleSend} />
+        </ChatContainer>
+      </MainContainer>
     </div>
   )
 }
