@@ -17,7 +17,7 @@ test('renders navigation links correctly', () => {
     const homeLink = screen.getByText('Home');
     expect(homeLink).toBeDefined();
 
-    const askAILink = screen.getByText('Ask AI');
+    const askAILink = screen.getByText('Chat AI');
     expect(askAILink).toBeDefined();
 
     const docsLink = screen.getByText('documentation');
