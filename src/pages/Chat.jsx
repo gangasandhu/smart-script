@@ -54,7 +54,7 @@ const Chat = ({mainTheme}) => {
           <MessageList
             className={mainTheme !== 'light' && 'message-container'}
             scrollBehavior='smooth'
-            typingIndicator={typing ? <TypingIndicator className='typing' content="ChatGPT is typing" /> : null}
+            typingIndicator={typing ? <TypingIndicator className={mainTheme !== 'light' && 'typing'} content="ChatGPT is typing" /> : null}
           >
             {messages.map((message, i) => {
               if (mainTheme == 'light')
