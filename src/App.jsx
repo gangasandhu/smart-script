@@ -17,6 +17,10 @@ import Team from './pages/Team'
 function App() {
   const [mainTheme, setMainTheme] = useState("vs-dark")
 
+  const handleMainTheme = (target) => {
+    setMainTheme(target.checked ? "light" : "vs-dark")
+  }
+
   const changeMainTheme = (th) => {
     setMainTheme(th)
   }
@@ -32,7 +36,7 @@ function App() {
 
   return (
     <Router>
-      <Header theme={mainTheme} />
+      <Header theme={mainTheme} changeMainTheme={handleMainTheme} />
       <main>
         <Routes>
           <Route path="smart-script/" element={<Home mainTheme={mainTheme} changeMainTheme={changeMainTheme} />} />

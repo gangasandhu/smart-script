@@ -1,10 +1,12 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import logo from "../assets/SmartScript-logo.png"
+import Toggle from 'react-toggle'
+import "react-toggle/style.css"
 
-const Header = ({ theme }) => {
+const Header = ({ theme, changeMainTheme }) => {
     return (
-        <nav className={`navbar navbar-expand-lg ${theme == 'light' ? 'bg-white' : 'bg-dark'}`} data-bs-theme={theme == 'light' ? "light" : "dark"}>
+        <nav className={`navbar navbar-expand-lg ${theme == 'light' ? 'bg-white' : 'bg-dark'} ps-4 pe-4`} data-bs-theme={theme == 'light' ? "light" : "dark"}>
             <div className="container-fluid">
                 <Link className="navbar-brand text-success" to="smart-script/">
                     <img className='me-2' width={40} src={logo} alt="SmartScript Logo" />
@@ -33,8 +35,21 @@ const Header = ({ theme }) => {
                     </ul>
 
                 </div>
+                <div className='d-flex align-items-center m-auto'>
+                    <label className={`pe-2 ${theme == 'light' ? 'text-black' : 'text-white'}`} htmlFor='theme-toggle' >{theme == 'light' ? 'Light ' : 'Dark '}</label>
+                    <Toggle
+                        id='theme-toggle'
+                        checked={theme === 'light'}
+                        onChange={({ target }) => changeMainTheme(target)}
+                        icons={{ 'checked': '', 'unchecked': '' }}
+                        aria-label="Light mode toggle"
+                    />
+                </div>
+
+
             </div>
         </nav>
+
     )
 }
 
