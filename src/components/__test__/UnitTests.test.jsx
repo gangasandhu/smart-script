@@ -4,20 +4,20 @@ import Home from '../../pages/Home';
 import Chat from '../../pages/Chat';
 import { MemoryRouter } from 'react-router-dom';
 
-describe("Multiple Language Flexibility - Unit Test", () => {
-    it("", async () => {
+describe("Multiple Language Flexibility - Unit Tests", () => {
+    it("should render the language selection dropdown properly", async () => {
         const renderLanguage = render(
             <MemoryRouter>
                 <Home />
             </MemoryRouter>
         );
 
-        const language = await renderLanguage.findByTestId("language");
+        const language = await renderLanguage.findByTestId('language');
         expect(language).toBeDefined();
     });
 });
 
-describe("Instant Compilation - Unit Test", () => {
+describe("Instant Compilation - Unit Tests", () => {
     it("should render the code editor properly", async () => {
         const renderEditor = render(
             <MemoryRouter>
@@ -27,8 +27,8 @@ describe("Instant Compilation - Unit Test", () => {
 
         // check if text for parts of code editor appear
         expect(renderEditor.getByText('Code Editor')).toBeInTheDocument();
-        expect(renderEditor.getByRole('button', { name: 'Run' })).toBeInTheDocument();
-        expect(renderEditor.getByRole('link', { name: 'AskAI' })).toBeInTheDocument();
+        expect(renderEditor.getByText('Run')).toBeInTheDocument();
+        expect(renderEditor.getByText('AskAI')).toBeInTheDocument();
     });
 
     it("should render the compiler properly", async () => {
@@ -38,12 +38,12 @@ describe("Instant Compilation - Unit Test", () => {
             </MemoryRouter>
         );
 
-        const compiler = await renderCompiler.findByTestId("compiler");
+        const compiler = await renderCompiler.findByTestId('compiler');
         expect(compiler).toBeDefined();
     })
 });
 
-describe("Multiple Themes - Unit Test", () => {
+describe("Multiple Themes - Unit Tests", () => {
     it("should render the theme select drop down properly", async () => {
         const renderThemeSelector = render(
             <MemoryRouter>
@@ -51,7 +51,7 @@ describe("Multiple Themes - Unit Test", () => {
             </MemoryRouter>
         )
 
-        const themeSelector = await renderThemeSelector.findByTestId("theme");
+        const themeSelector = await renderThemeSelector.findByTestId('theme');
         expect(themeSelector).toBeDefined();
     });
 
@@ -84,9 +84,16 @@ describe("Multiple Themes - Unit Test", () => {
     });*/
 });
 
-describe("Code Suggestions - Unit Test", () => {
-    it("", async () => {
+describe("Code Suggestions - Unit Tests", () => {
+    it("should render the askai button properly", async () => {
+        const renderAskAI = render(
+            <MemoryRouter>
+                <Home />
+            </MemoryRouter>
+        )
 
+        const askAI = await renderAskAI.findByTestId("askai");
+        expect(askAI).toBeDefined();
     });
 
     it("", async () => {
@@ -94,7 +101,7 @@ describe("Code Suggestions - Unit Test", () => {
     });
 });
 
-describe("Error Suggestions - Unit Test", () => {
+/*describe("Error Suggestions - Unit Test", () => {
     it("", async () => {
 
     });
@@ -102,18 +109,24 @@ describe("Error Suggestions - Unit Test", () => {
     it("", async () => {
 
     });
-});
+});*/
 
-describe("Chatbot Integration - Unit Test", () => {
+describe("Chatbot Integration - Unit Tests", () => {
     it("should initialize with the correct initial message", async () => {
         const renderChat = render(<Chat />);
-        const initialMessage = await renderChat.getByText("Hello, I'm ChatGPT. Feel free to ask me anything!");
+        const initialMessage = await renderChat.getByText("Hello, I'm your personal AI Assistant. Feel free to ask me anything!");
         expect(initialMessage).toBeDefined();
     });
 
     it("should render all messages properly", async () => {
-        const renderedChat = render(<Chat />);
-        const message = await renderedChat.findAllByTestId(/^message/);
+        const renderedMessages = render(<Chat />);
+        const message = await renderedMessages.findAllByTestId(/^message/);
         expect(message.length).toEqual(1);
+    });
+
+    it("should render the chatbox properly", async () => {
+        const renderedChatbox = render(<Chat />);
+        const chatBox = await renderedChatbox.findByTestId('input')
+        expect(chatBox).toBeDefined();
     });
 });

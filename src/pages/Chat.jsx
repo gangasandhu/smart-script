@@ -9,7 +9,7 @@ const Chat = ({mainTheme}) => {
   const [typing, setTyping] = useState(false);
   const [messages, setMessages] = useState([
     {
-      message: "Hello, I'm your personal AI Assitant. Feel free to ask me anything!",
+      message: "Hello, I'm your personal AI Assistant. Feel free to ask me anything!",
       direction: 'incoming',
       sentTime: "just now",
       sender: "ChatGPT"
@@ -57,13 +57,13 @@ const Chat = ({mainTheme}) => {
           >
             {messages.map((message, i) => {
               if (mainTheme == 'light')
-                return <Message key={i} model={message} /> 
+                return <Message key={i} data-testid='message' model={message} /> 
               else 
-                return <Message className={`cs-message--${message.direction} cs-message__content`} key={i} model={message} />
+                return <Message className={`cs-message--${message.direction} cs-message__content`} data-testid={'message'} key={i} model={message} />
              
             })}
           </MessageList>
-          <MessageInput className={mainTheme !== 'light' ? 'message-input shadow' : 'message-input-light'} placeholder='Type message here' onSend={handleSend} />
+          <MessageInput className={mainTheme !== 'light' ? 'message-input shadow' : 'message-input-light'} data-testid={'input'} placeholder='Type message here' onSend={handleSend} />
         </ChatContainer>
       </MainContainer>
     </div>

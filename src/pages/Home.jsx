@@ -152,8 +152,8 @@ const Home = ({mainTheme, changeMainTheme}) => {
           handleThemeChange={handleThemeChange}
         />
         <div className='cta'>
-          <button className='btn btn-success me-2' onClick={getCodeSuggestion}>AskAI</button>
-          <button className='btn btn-primary' onClick={runCode}>Run</button>
+          <button className='btn btn-success me-2' data-testid='askai' role='ask' onClick={getCodeSuggestion}>AskAI</button>
+          <button className='btn btn-primary' role='link' onClick={runCode}>Run</button>
         </div>
       </div>
       {showSuggestion && <AiEditor
@@ -172,7 +172,7 @@ const Home = ({mainTheme, changeMainTheme}) => {
             value={value}
           />
         </div>
-        <div className='col-lg-4 col-md-4 col-sm-12'>
+        <div className='col-lg-4 col-md-4 col-sm-12' data-testid='compiler'>
           <OutputBox
             outputDetails={outputDetails}
             processing={processing}
