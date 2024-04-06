@@ -1,18 +1,16 @@
-import React, { useState } from 'react'
-import CodeEditor from '../components/CodeEditor'
+import React, { useState } from 'react';
+import CodeEditor from '../components/CodeEditor';
 import OutputBox from '../components/OutputBox';
 import { getOutputStatus, getOutputToken } from '../services/compileApi';
 import languageOptions from '../constants/languageOptions';
-
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import AiEditor from '../components/AiEditor';
 import { getAiSuggestion } from '../services/ai';
 import EditorConfig from '../components/EditorConfig';
-import '../styles/home.css'
+import '../styles/home.css';
 
-const Home = ({mainTheme, changeMainTheme}) => {
-
+const Home = ({ mainTheme, changeMainTheme }) => {
   // code editor states
   const [value, setValue] = useState("// write your code here");
   const [selectedTheme, setSelectedTheme] = useState('vs-dark');
@@ -180,9 +178,8 @@ const Home = ({mainTheme, changeMainTheme}) => {
           />
         </div>
       </div>
-
     </div>
   )
 }
 
-export default Home
+export default Home;

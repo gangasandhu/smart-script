@@ -1,8 +1,8 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
-import logo from "../assets/SmartScript-logo.png"
-import Toggle from 'react-toggle'
-import "react-toggle/style.css"
+import React from 'react';
+import { Link } from 'react-router-dom';
+import logo from "../assets/SmartScript-logo.png";
+import Toggle from 'react-toggle';
+import "react-toggle/style.css";
 
 const Header = ({ theme, changeMainTheme }) => {
     return (
@@ -26,14 +26,12 @@ const Header = ({ theme, changeMainTheme }) => {
                             <Link className="nav-link" to="smart-script/chat">Chat AI</Link>
                         </li>
                         <li className="nav-item">
-                            <Link className="nav-link" to="smart-script/docs">documentation</Link>
+                            <Link className="nav-link" to="smart-script/docs">Documentation</Link>
                         </li>
                         <li className="nav-item">
                             <Link className="nav-link" to="smart-script/team">Team</Link>
                         </li>
-
                     </ul>
-
                 </div>
                 <div className='d-flex align-items-center m-auto'>
                     <label className={`pe-2 ${theme == 'light' ? 'text-black' : 'text-white'}`} htmlFor='theme-toggle' >{theme == 'light' ? 'Light ' : 'Dark '}</label>
@@ -45,12 +43,9 @@ const Header = ({ theme, changeMainTheme }) => {
                         aria-label="Light mode toggle"
                     />
                 </div>
-
-
             </div>
         </nav>
-
     )
-}
+};
 
-export default Header
+export default Header;

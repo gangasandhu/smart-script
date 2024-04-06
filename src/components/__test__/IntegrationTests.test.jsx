@@ -1,8 +1,25 @@
 import React from 'react';
-import { render, fireEvent } from '@testing-library/react';
+import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import Home from '../../pages/Home';
 import Chat from '../../pages/Chat';
-import { MemoryRouter } from 'react-router-dom';
+import { BrowserRouter } from 'react-router-dom';
+import userEvent from '@testing-library/user-event';
+
+const MockHome = () => {
+    return (
+        <BrowserRouter>
+            <Home />
+        </BrowserRouter>
+    )
+}
+
+const MockChat = () => {
+    return (
+        <BrowserRouter>
+            <Chat />
+        </BrowserRouter>
+    )
+}
 
 describe("Multiple Language Flexibility - Integration Tests", () => {
     it("", async () => {
@@ -14,7 +31,7 @@ describe("Multiple Language Flexibility - Integration Tests", () => {
     });
 });
 
-describe("Instant Compilation - Unit Tests", () => {
+describe("Instant Compilation - Integration Tests", () => {
     it("", async () => {
 
     });
@@ -24,7 +41,7 @@ describe("Instant Compilation - Unit Tests", () => {
     });
 });
 
-describe("Multiple Themes - Unit Tests", () => {
+describe("Multiple Themes - Integration Tests", () => {
     it("", async () => {
 
     });
@@ -34,7 +51,7 @@ describe("Multiple Themes - Unit Tests", () => {
     });
 });
 
-describe("Code Suggestions - Unit Tests", () => {
+describe("Code Suggestions - Integration Tests", () => {
     it("", async () => {
 
     });
@@ -44,7 +61,7 @@ describe("Code Suggestions - Unit Tests", () => {
     });
 });
 
-describe("Error Suggestions - Unit Tests", () => {
+describe("Error Suggestions - Integration Tests", () => {
     it("", async () => {
 
     });
@@ -54,7 +71,7 @@ describe("Error Suggestions - Unit Tests", () => {
     });
 });
 
-describe("Chatbot Integration - Unit Tests", () => {
+describe("Chatbot Integration - Integration Tests", () => {
     it("", async () => {
 
     });

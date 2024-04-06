@@ -1,5 +1,5 @@
-import React from 'react'
-import '../styles/output.css'
+import React from 'react';
+import '../styles/output.css';
 
 const OutputBox = ({ outputDetails, processing, theme }) => {
     const getOutput = () => {
@@ -44,11 +44,9 @@ const OutputBox = ({ outputDetails, processing, theme }) => {
                     {outputDetails ? <>{getOutput()}</> : null}
                 </div>
                 <hr />
-
                 {outputDetails && <div className='output-window pt-3'>
-
                     <div className='d-flex justify-content-between'>
-                        <p>
+                        <p data-testid='status'>
                             Status:{" "}
                             <span className="text-success">
                                 {outputDetails?.status?.description}
@@ -73,4 +71,4 @@ const OutputBox = ({ outputDetails, processing, theme }) => {
     )
 }
 
-export default OutputBox
+export default OutputBox;
