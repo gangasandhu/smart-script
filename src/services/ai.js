@@ -37,7 +37,6 @@ const processMessageToChatGPT = async (chatMessages) => {
         console.log(data);
         return data.choices[0].message.content
     } catch (error) {
-        // Handle error
         console.error("Error:", error);
     }
 };
@@ -66,7 +65,6 @@ const getAiSuggestion = async (code, language) => {
         console.log(data);
         return data.choices[0].message.content
     } catch (error) {
-        // Handle error
         console.error("Error:", error);
     }
 };

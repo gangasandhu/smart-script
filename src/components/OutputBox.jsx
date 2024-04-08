@@ -45,7 +45,7 @@ const OutputBox = ({ outputDetails, processing, theme }) => {
                 </div>
                 <hr />
                 {outputDetails && <div className='output-window pt-3'>
-                    <div className='d-flex justify-content-between'>
+                    <div className='d-flex justify-content-between' data-testid='output'>
                         <p data-testid='status'>
                             Status:{" "}
                             <span className="text-success">

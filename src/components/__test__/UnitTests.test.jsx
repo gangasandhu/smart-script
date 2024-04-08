@@ -30,8 +30,14 @@ describe("Multiple Language Flexibility - Unit Tests", () => {
         expect(language).toBeDefined();
     });
 
-    it("", async () => {
+    it("should be able to be clickable (language tab)", async () => {
+        const clickLanguage = render(
+            <MockHome />
+        );
 
+        fireEvent.click(clickLanguage.getByText(/Select Language:/i));
+        const languageTab = await clickLanguage.findByTestId('language-tab');
+        expect(languageTab).toBeDefined();
     });
 });
 
@@ -67,8 +73,14 @@ describe("Multiple Themes - Unit Tests", () => {
         expect(themeSelector).toBeDefined();
     });
 
-    it("", async () => {
+    it("should be able to be clickable (theme tab)", async () => {
+        const clickTheme = render(
+            <MockHome />
+        );
 
+        fireEvent.click(clickTheme.getByText(/Select Theme:/i));
+        const themeTab = await clickTheme.findByTestId('theme-tab');
+        expect(themeTab).toBeDefined();
     });
 });
 
@@ -95,17 +107,23 @@ describe("Code Suggestions - Unit Tests", () => {
 
 describe("Error Suggestions - Unit Test", () => {
     it("should display the status of the compiler after running", async () => {
-        const renderCorrect = render(
+        const renderStatus = render(
             <MockHome />
         )
 
-        fireEvent.click(renderCorrect.getByText(/Run/i));
-        const status = await renderCorrect.findByTestId("status");
+        fireEvent.click(renderStatus.getByText(/Run/i));
+        const status = await renderStatus.findByTestId("status");
         expect(status).toBeDefined();
     });
 
-    it("", async () => {
+    it("should display the output box of the status", async () => {
+        const renderOutput = render(
+            <MockHome />
+        )
 
+        fireEvent.click(renderOutput.getByText(/Run/i));
+        const status = await renderOutput.findByTestId("output");
+        expect(status).toBeDefined();
     });
 });
 

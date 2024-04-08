@@ -101,7 +101,7 @@ describe("Error Suggestions - Integration Tests", () => {
 
         axios.request.mockResolvedValue(mockResponse);
 
-        const token = 'mockToken'; // Use the token obtained from getOutputToken in real scenarios
+        const token = 'mockToken';
         const response = await getOutputStatus(token);
 
         expect(response.data).toHaveProperty('stdout', btoa(mockOutput));
@@ -119,7 +119,7 @@ describe("Error Suggestions - Integration Tests", () => {
 
 describe("Chatbot Integration - Integration Tests", () => {
     it("should process messages correctly", async () => {
-        const mockResponse = { data: { choices: [{ message: { content: "Sure, this is how you can implement it." } }] } };
+        const mockResponse = { data: { choices: [{ message: { content: "This is how you can implement a useState." } }] } };
         axios.post.mockResolvedValue(mockResponse);
 
         const chatMessages = [
@@ -127,7 +127,7 @@ describe("Chatbot Integration - Integration Tests", () => {
         ];
         const response = await processMessageToChatGPT(chatMessages);
 
-        expect(response).toBe("Sure, this is how you can implement it.");
+        expect(response).toBe("This is how you can implement a useState.");
         expect(axios.post).toHaveBeenCalledWith(expect.any(String), expect.any(Object), expect.any(Object));
     });
 
