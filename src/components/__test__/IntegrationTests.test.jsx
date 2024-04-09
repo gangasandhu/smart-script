@@ -38,7 +38,7 @@ describe("Multiple Language Flexibility - Integration Tests", () => {
         await waitFor(() => {
             const editor = screen.getByRole('editor');
             expect(editor).toHaveValue("// write your Python code here");
-        }, { timeout: 5000 });
+        }, { timeout: 2000 });
     });
 
     it("updates the code editor to reflect coding in typescript", async () => {
@@ -51,7 +51,7 @@ describe("Multiple Language Flexibility - Integration Tests", () => {
         await waitFor(() => {
             const editor = screen.getByRole('editor');
             expect(editor).toHaveValue("// write your typescript code here");
-        }, { timeout: 5000 });
+        }, { timeout: 2000 });
     });
 });
 
@@ -80,13 +80,40 @@ describe("Instant Compilation - Integration Tests", () => {
         }));
     });
 
-    it("", async () => {
+    it('should retrieve the compilation output using token', async () => {
+        const mockToken = 'mockToken';
+        const mockTokenResponse = { data: { token: mockToken } };
+        axios.request.mockResolvedValueOnce(mockTokenResponse);
 
+        const mockOutput = 'Hello, world!';
+        const mockStatusId = 3;
+        const mockOutputResponse = {
+            data: {
+                stdout: btoa(mockOutput),
+                status: { id: mockStatusId, description: "Accepted" }
+            }
+        };
+        axios.request.mockResolvedValueOnce(mockOutputResponse);
+
+        const sourceCode = 'console.log("Hello, world!");';
+        const languageId = 1;
+        const customInput = '';
+        await getOutputToken(sourceCode, languageId, customInput);
+
+        const response = await getOutputStatus(mockToken);
+        const output = atob(response.data.stdout);
+
+        expect(output).toBe(mockOutput);
+        expect(response.data.status.id).toBe(mockStatusId);
+        expect(axios.request).toHaveBeenCalledWith(expect.objectContaining({
+            method: 'GET',
+            url: expect.stringContaining(mockToken),
+        }));
     });
 });
 
 describe("Multiple Themes - Integration Tests", () => {
-    it("correctly changes the theme to light when selected", async () => {
+    it("should correctly changes the theme to light when selected", async () => {
         render(<MockHome />);
 
         const themeDropdown = screen.getByTestId('theme-tab');
@@ -97,10 +124,10 @@ describe("Multiple Themes - Integration Tests", () => {
         await waitFor(() => {
             const backgroundColor = getComputedStyle(document.body).backgroundColor;
             expect(backgroundColor).toBe('rgb(238, 238, 238)');
-        }, { timeout: 5000 });
+        }, { timeout: 2000 });
     });
 
-    it("correctly changes the theme to high contrast when selected", async () => {
+    it("should correctly changes the theme to high contrast when selected", async () => {
         render(<MockHome />);
 
         const themeDropdown = screen.getByTestId('theme-tab');
@@ -111,7 +138,7 @@ describe("Multiple Themes - Integration Tests", () => {
         await waitFor(() => {
             const backgroundColor = getComputedStyle(document.body).backgroundColor;
             expect(backgroundColor).toBe('rgb(36, 36, 36)');
-        }, { timeout: 5000 });
+        }, { timeout: 2000 });
     });
 });
 
@@ -128,8 +155,18 @@ describe("Code Suggestions - Integration Tests", () => {
         expect(axios.post).toHaveBeenCalledWith(expect.any(String), expect.any(Object), expect.any(Object));
     });
 
-    it("", async () => {
+    it("should log an error when retrieving code suggestions fails", async () => {
+        const consoleSpy = vi.spyOn(console, 'error').mockImplementation(() => { });
+        const errorMessage = "Network error: Unable to fetch code suggestions";
+        axios.post.mockRejectedValue(new Error(errorMessage));
+        const code = 'console.log("Hello, world!");';
+        const language = 'JavaScript';
 
+        await getAiSuggestion(code, language);
+
+        expect(consoleSpy).toHaveBeenCalled();
+        expect(consoleSpy).toHaveBeenCalledWith(expect.stringContaining("Error:"));
+        consoleSpy.mockRestore();
     });
 });
 
@@ -151,8 +188,26 @@ describe("Error Suggestions - Integration Tests", () => {
         }));
     });
 
-    it("", async () => {
-
+    it('should correctly handles compilation errors', async () => {
+        const mockErrorResponse = {
+            data: {
+                stderr: btoa("Syntax error on line 1"),
+                status: { description: 'Compilation Error' }
+            }
+        };
+        axios.request.mockResolvedValueOnce(mockErrorResponse);
+    
+        const token = 'errorToken';
+        const response = await getOutputStatus(token);
+    
+        const errorMessage = atob(response.data.stderr);
+    
+        expect(errorMessage).toBe("Syntax error on line 1");
+        expect(response.data.status.description).toBe('Compilation Error');
+        expect(axios.request).toHaveBeenCalledWith(expect.objectContaining({
+            method: 'GET',
+            url: expect.stringContaining(token),
+        }));
     });
 });
 
@@ -170,7 +225,27 @@ describe("Chatbot Integration - Integration Tests", () => {
         expect(axios.post).toHaveBeenCalledWith(expect.any(String), expect.any(Object), expect.any(Object));
     });
 
-    it("", async () => {
-
+    it("should handle errors from the chatbot service", async () => {
+        const errorMessage = "Chatbot service error";
+        axios.post.mockRejectedValue(new Error(errorMessage));
+    
+        const chatMessages = [{ sender: 'User', message: 'What is React?' }];
+        
+        let errorCaught = null;
+        try {
+            await processMessageToChatGPT(chatMessages);
+        } catch (error) {
+            errorCaught = error;
+        }
+    
+        expect(errorCaught).toBeDefined();
+        expect(errorCaught.message).toContain(errorMessage);
+    
+        expect(axios.post).toHaveBeenCalledWith(expect.any(String), expect.any(Object), {
+            headers: expect.objectContaining({
+                "Authorization": expect.stringContaining("Bearer"),
+                "Content-Type": "application/json"
+            })
+        });
     });
 });
