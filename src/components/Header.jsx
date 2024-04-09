@@ -25,12 +25,6 @@ const Header = ({ theme, changeMainTheme }) => {
                         <li className="nav-item">
                             <Link className="nav-link" to="smart-script/chat">Chat AI</Link>
                         </li>
-                        <li className="nav-item">
-                            <Link className="nav-link" to="smart-script/docs">Documentation</Link>
-                        </li>
-                        <li className="nav-item">
-                            <Link className="nav-link" to="smart-script/team">Team</Link>
-                        </li>
                     </ul>
                 </div>
                 <div className='d-flex align-items-center m-auto'>
