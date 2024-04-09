@@ -131,7 +131,7 @@ const Home = ({ mainTheme, changeMainTheme }) => {
   }
 
   return (
-    <div>
+    <div data-testid='website'>
       <ToastContainer
         position="top-right"
         autoClose={2000}

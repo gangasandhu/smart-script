@@ -4,6 +4,7 @@ import { describe, it, expect, vi } from 'vitest';
 import axios from 'axios';
 import Home from '../../pages/Home';
 import Chat from '../../pages/Chat';
+import userEvent from '@testing-library/user-event';
 import { processMessageToChatGPT, getAiSuggestion } from '../../services/ai';
 import { getOutputToken, getOutputStatus } from '../../services/compileApi';
 import { BrowserRouter } from 'react-router-dom';
@@ -67,17 +68,37 @@ describe("Instant Compilation - Integration Tests", () => {
 });
 
 describe("Multiple Themes - Integration Tests", () => {
-    it("", async () => {
+    it("correctly changes the theme to light when selected", async () => {
+        render(<MockHome />);
 
+        const themeDropdown = screen.getByTestId('theme-tab');
+        userEvent.click(themeDropdown);
+        fireEvent.keyDown(themeDropdown, { key: 'ArrowDown', code: 'ArrowDown' });     
+        await waitFor(() => userEvent.type(themeDropdown, '{arrowdown}{enter}'));
+
+        await waitFor(() => {
+            const backgroundColor = getComputedStyle(document.body).backgroundColor;
+            expect(backgroundColor).toBe('rgb(238, 238, 238)');
+        }, { timeout: 5000 });
     });
 
-    it("", async () => {
+    it("correctly changes the theme to high contrast when selected", async () => {
+        render(<MockHome />);
 
+        const themeDropdown = screen.getByTestId('theme-tab');
+        userEvent.click(themeDropdown);
+        fireEvent.keyDown(themeDropdown, { key: 'ArrowDown', code: 'ArrowDown' });
+        await waitFor(() => userEvent.type(themeDropdown, '{arrowdown}{arrowdown}{enter}'));
+
+        await waitFor(() => {
+            const backgroundColor = getComputedStyle(document.body).backgroundColor;
+            expect(backgroundColor).toBe('rgb(36, 36, 36)');
+        }, { timeout: 5000 });
     });
 });
 
 describe("Code Suggestions - Integration Tests", () => {
-    it("provides code suggestions properly", async () => {
+    it("should provide code suggestions properly", async () => {
         const mockResponse = { data: { choices: [{ message: { content: "console.log('Hello, world!');" } }] } };
         axios.post.mockResolvedValue(mockResponse);
 
