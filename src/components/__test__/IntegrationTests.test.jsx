@@ -28,12 +28,30 @@ const MockChat = () => {
 }
 
 describe("Multiple Language Flexibility - Integration Tests", () => {
-    it("", async () => {
+    it("updates the code editor to reflect coding in python", async () => {
+        render(<MockHome />);
 
+        const languageDropdown = screen.getByTestId('language-tab');
+        userEvent.click(languageDropdown);
+        await waitFor(() => userEvent.type(languageDropdown, '{arrowdown}{enter}'));
+
+        await waitFor(() => {
+            const editor = screen.getByRole('editor');
+            expect(editor).toHaveValue("// write your Python code here");
+        }, { timeout: 5000 });
     });
 
-    it("", async () => {
+    it("updates the code editor to reflect coding in typescript", async () => {
+        render(<MockHome />);
 
+        const languageDropdown = screen.getByTestId('language-tab');
+        userEvent.click(languageDropdown);
+        await waitFor(() => userEvent.type(languageDropdown, '{arrowdown}{arrowdown}{enter}'));
+
+        await waitFor(() => {
+            const editor = screen.getByRole('editor');
+            expect(editor).toHaveValue("// write your typescript code here");
+        }, { timeout: 5000 });
     });
 });
 
@@ -73,7 +91,7 @@ describe("Multiple Themes - Integration Tests", () => {
 
         const themeDropdown = screen.getByTestId('theme-tab');
         userEvent.click(themeDropdown);
-        fireEvent.keyDown(themeDropdown, { key: 'ArrowDown', code: 'ArrowDown' });     
+        fireEvent.keyDown(themeDropdown, { key: 'ArrowDown', code: 'ArrowDown' });
         await waitFor(() => userEvent.type(themeDropdown, '{arrowdown}{enter}'));
 
         await waitFor(() => {
