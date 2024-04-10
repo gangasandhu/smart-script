@@ -35,9 +35,9 @@ const OutputBox = ({ outputDetails, processing, theme }) => {
     };
 
     return (
-        <div className='shadow'>
+        <div className='shadow' data-testid='output'>
             <p className='text-secondary text-start p-2 mt-4'>Compiler</p>
-            <div className={theme == 'light' ? 'compiler bg-white text-dark' : 'compiler bg-dark text-white'}>
+            <div className={theme == 'light' ? 'compiler bg-white text-dark' : 'compiler bg-dark text-white'} data-testid='status'>
 
                 $ {processing && "\nCompiling the code..."}
                 <div className='output-window'>
