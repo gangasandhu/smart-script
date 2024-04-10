@@ -116,7 +116,7 @@ describe("Error Suggestions - Unit Test", () => {
         expect(status).toBeDefined();
     });
 
-    it("should display the output box of the status", async () => {
+    it("should display the output box of the status code", async () => {
         const renderOutput = render(
             <MockHome />
         )
@@ -128,13 +128,13 @@ describe("Error Suggestions - Unit Test", () => {
 });
 
 describe("Chatbot Integration - Unit Tests", () => {
-    it("should initialize with the correct initial message", async () => {
+    it("should initialize chatbot with the correct initial message", async () => {
         const renderChat = render(<MockChat />);
         const initialMessage = renderChat.getByText("Hello, I'm your personal AI Assistant. Feel free to ask me anything!");
         expect(initialMessage).toBeDefined();
     });
 
-    it("should render all messages properly", async () => {
+    it("should render all chatbot messages properly", async () => {
         const renderedMessages = render(<MockChat />);
         const message = await renderedMessages.findAllByTestId(/^message/);
         expect(message.length).toEqual(1);
