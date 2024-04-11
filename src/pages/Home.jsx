@@ -1,18 +1,16 @@
-import React, { useState } from 'react'
-import CodeEditor from '../components/CodeEditor'
+import React, { useState } from 'react';
+import CodeEditor from '../components/CodeEditor';
 import OutputBox from '../components/OutputBox';
 import { getOutputStatus, getOutputToken } from '../services/compileApi';
 import languageOptions from '../constants/languageOptions';
-
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import AiEditor from '../components/AiEditor';
 import { getAiSuggestion } from '../services/ai';
 import EditorConfig from '../components/EditorConfig';
-import '../styles/home.css'
+import '../styles/home.css';
 
-const Home = ({mainTheme, changeMainTheme}) => {
-
+const Home = ({ mainTheme, changeMainTheme }) => {
   // code editor states
   const [value, setValue] = useState("// write your code here");
   const [selectedTheme, setSelectedTheme] = useState('vs-dark');
@@ -47,7 +45,6 @@ const Home = ({mainTheme, changeMainTheme}) => {
     console.log("code: ", value)
     setOutputDetails("")
     await compileCode(value, selectedLanguage.id, customInput)
-
   }
 
   // compile code and generate an output token
@@ -134,7 +131,7 @@ const Home = ({mainTheme, changeMainTheme}) => {
   }
 
   return (
-    <div>
+    <div data-testid='website'>
       <ToastContainer
         position="top-right"
         autoClose={2000}
@@ -153,8 +150,8 @@ const Home = ({mainTheme, changeMainTheme}) => {
           handleThemeChange={handleThemeChange}
         />
         <div className='cta'>
-          <button className='btn btn-success me-2' onClick={getCodeSuggestion}>AskAI</button>
-          <button className='btn btn-primary' onClick={runCode}>Run</button>
+          <button className='btn btn-success me-2' data-testid='askai' role='ask' onClick={getCodeSuggestion}>AskAI</button>
+          <button className='btn btn-primary' role='link' onClick={runCode}>Run</button>
         </div>
       </div>
       {showSuggestion && <AiEditor
@@ -173,7 +170,7 @@ const Home = ({mainTheme, changeMainTheme}) => {
             value={value}
           />
         </div>
-        <div className='col-lg-4 col-md-4 col-sm-12'>
+        <div className='col-lg-4 col-md-4 col-sm-12' data-testid='compiler'>
           <OutputBox
             outputDetails={outputDetails}
             processing={processing}
@@ -181,9 +178,8 @@ const Home = ({mainTheme, changeMainTheme}) => {
           />
         </div>
       </div>
-
     </div>
   )
 }
 
-export default Home
+export default Home;

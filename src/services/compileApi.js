@@ -34,7 +34,6 @@ const getOutputToken = async (sourceCode, languageId, customInput) => {
 }
 
 const getOutputStatus = async (token) => {
-    
     const options = {
         method: 'GET',
         url: `${API_URL}/${token}`,
@@ -52,4 +51,4 @@ const getOutputStatus = async (token) => {
     return response
 }
 
-export {getOutputToken, getOutputStatus}
+export { getOutputToken, getOutputStatus }

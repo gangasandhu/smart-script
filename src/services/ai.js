@@ -37,16 +37,14 @@ const processMessageToChatGPT = async (chatMessages) => {
         console.log(data);
         return data.choices[0].message.content
     } catch (error) {
-        // Handle error
         console.error("Error:", error);
     }
 };
 
 const getAiSuggestion = async (code, language) => {
-
     const systemMessage = {
         role: "system",
-        content: `Give me code suggestion for the following code in ${language}. Only give the actual code in response no human language. Here is the code: ${code}`, 
+        content: `Give me code suggestion for the following code in ${language}. Only give the actual code in response no human language. Here is the code: ${code}`,
     };
 
     const apiRequestBody = {
@@ -67,7 +65,6 @@ const getAiSuggestion = async (code, language) => {
         console.log(data);
         return data.choices[0].message.content
     } catch (error) {
-        // Handle error
         console.error("Error:", error);
     }
 };

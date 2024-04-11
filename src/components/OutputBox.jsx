@@ -1,11 +1,9 @@
-import React from 'react'
-import '../styles/output.css'
+import React from 'react';
+import '../styles/output.css';
 
 const OutputBox = ({ outputDetails, processing, theme }) => {
-
     const getOutput = () => {
         let statusId = outputDetails?.status?.id;
-
         if (statusId === 6) {
             // compilation error
             return (
@@ -37,20 +35,18 @@ const OutputBox = ({ outputDetails, processing, theme }) => {
     };
 
     return (
-        <div className='shadow'>
+        <div className='shadow' data-testid='output'>
             <p className='text-secondary text-start p-2 mt-4'>Compiler</p>
-            <div className={theme == 'light' ? 'compiler bg-white text-dark' : 'compiler bg-dark text-white'}>
+            <div className={theme == 'light' ? 'compiler bg-white text-dark' : 'compiler bg-dark text-white'} data-testid='status'>
 
                 $ {processing && "\nCompiling the code..."}
                 <div className='output-window'>
                     {outputDetails ? <>{getOutput()}</> : null}
                 </div>
                 <hr />
-
                 {outputDetails && <div className='output-window pt-3'>
-
-                    <div className='d-flex justify-content-between'>
-                        <p>
+                    <div className='d-flex justify-content-between' data-testid='output'>
+                        <p data-testid='status'>
                             Status:{" "}
                             <span className="text-success">
                                 {outputDetails?.status?.description}
@@ -75,4 +71,4 @@ const OutputBox = ({ outputDetails, processing, theme }) => {
     )
 }
 
-export default OutputBox
+export default OutputBox;

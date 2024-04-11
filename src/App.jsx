@@ -12,8 +12,6 @@ import Footer from './components/Footer'
 import Documentation from './pages/Documentation'
 import Team from './pages/Team'
 
-
-
 function App() {
   const [mainTheme, setMainTheme] = useState("vs-dark")
 
@@ -45,7 +43,6 @@ function App() {
           <Route path="smart-script/team" element={<Team />} />
         </Routes>
       </main>
-
       <Footer theme={mainTheme}/>
     </Router>
   )
