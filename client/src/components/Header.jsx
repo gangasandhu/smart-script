@@ -8,7 +8,7 @@ const Header = ({ theme, changeMainTheme }) => {
     return (
         <nav className={`navbar navbar-expand-lg ${theme == 'light' ? 'bg-white' : 'bg-dark'} ps-4 pe-4`} data-bs-theme={theme == 'light' ? "light" : "dark"}>
             <div className="container-fluid">
-                <Link className="navbar-brand text-success" to="smart-script/">
+                <Link className="navbar-brand text-success" to="/">
                     <img className='me-2' width={40} src={logo} alt="SmartScript Logo" />
                     SmartScript
                 </Link>
@@ -18,12 +18,12 @@ const Header = ({ theme, changeMainTheme }) => {
                 <div className="collapse navbar-collapse" id="navbarColor02">
                     <ul className="navbar-nav me-auto text-center">
                         <li className="nav-item">
-                            <Link className="nav-link active" to="smart-script/">Home
+                            <Link className="nav-link active" to="/">Home
                                 <span className="visually-hidden">(current)</span>
                             </Link>
                         </li>
                         <li className="nav-item">
-                            <Link className="nav-link" to="smart-script/chat">Chat AI</Link>
+                            <Link className="nav-link" to="/chat">Chat AI</Link>
                         </li>
                     </ul>
                 </div>
