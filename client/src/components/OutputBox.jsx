@@ -35,39 +35,45 @@ const OutputBox = ({ outputDetails, processing, theme }) => {
     };
 
     return (
-        <div className='shadow' data-testid='output'>
-            <p className='text-secondary text-start p-2 mt-4'>Compiler</p>
-            <div className={theme == 'light' ? 'compiler bg-white text-dark' : 'compiler bg-dark text-white'} data-testid='status'>
+        <div className="shadow-lg" data-testid="output">
+                <p className="text-secondary text-start p-2">Compiler</p>
 
+            <div className={`${theme === 'light' ? 'bg-white text-dark' : 'bg-neutral-800 text-white'} compiler`} data-testid="status">
                 $ {processing && "\nCompiling the code..."}
-                <div className='output-window'>
+
+                <div className="output-window h-[80%]">
                     {outputDetails ? <>{getOutput()}</> : null}
                 </div>
-                <hr />
-                {outputDetails && <div className='output-window pt-3'>
-                    <div className='d-flex justify-content-between' data-testid='output'>
-                        <p data-testid='status'>
-                            Status:{" "}
-                            <span className="text-success">
-                                {outputDetails?.status?.description}
-                            </span>
-                        </p>
-                        <p>
-                            Memory:{" "}
-                            <span className="text-success">
-                                {outputDetails?.memory}
-                            </span>
-                        </p>
-                        <p>
-                            Time:{" "}
-                            <span className="text-success">
-                                {outputDetails?.time}
-                            </span>
-                        </p>
+
+                <hr className="my-4" />
+
+                {outputDetails && (
+                    <div className="output-window pt-3">
+                        <div className="flex justify-between" data-testid="output">
+                            <p data-testid="status">
+                                Status:{" "}
+                                <span className="text-green-500">
+                                    {outputDetails?.status?.description}
+                                </span>
+                            </p>
+                            <p>
+                                Memory:{" "}
+                                <span className="text-green-500">
+                                    {outputDetails?.memory}
+                                </span>
+                            </p>
+                            <p>
+                                Time:{" "}
+                                <span className="text-green-500">
+                                    {outputDetails?.time}
+                                </span>
+                            </p>
+                        </div>
                     </div>
-                </div>}
+                )}
             </div>
         </div>
+
     )
 }
 

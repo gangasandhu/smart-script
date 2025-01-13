@@ -6,39 +6,54 @@ import "react-toggle/style.css";
 
 const Header = ({ theme, changeMainTheme }) => {
     return (
-        <nav className={`navbar navbar-expand-lg ${theme == 'light' ? 'bg-white' : 'bg-dark'} ps-4 pe-4`} data-bs-theme={theme == 'light' ? "light" : "dark"}>
-            <div className="container-fluid">
-                <Link className="navbar-brand text-success" to="/">
-                    <img className='me-2' width={40} src={logo} alt="SmartScript Logo" />
-                    SmartScript
+        <nav className={`navbar navbar-expand-lg ${theme === 'light' ? 'bg-white text-neutral-800' : 'bg-neutral-900 text-gray-100'} shadow-md py-3`} data-bs-theme={theme === 'light' ? 'light' : 'dark'}>
+            <div className="container-fluid flex justify-between items-center px-4">
+                {/* Logo Section */}
+                <Link className="flex items-center space-x-2" to="/">
+                    <img className="w-10 h-10 object-contain" src={logo} alt="SmartScript Logo" />
+                    <span className="font-semibold text-2xl ">SmartScript</span>
                 </Link>
-                <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
-                    <span className="navbar-toggler-icon"></span>
-                </button>
-                <div className="collapse navbar-collapse" id="navbarColor02">
-                    <ul className="navbar-nav me-auto text-center">
+
+            
+                {/* Navbar Links */}
+                <div className="hidden md:block md:flex md:items-center md:space-x-8" id="navbarColor02">
+                    <ul className="navbar-nav flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-6">
                         <li className="nav-item">
-                            <Link className="nav-link active" to="/">Home
-                                <span className="visually-hidden">(current)</span>
+                            <Link className="nav-link text-lg font-medium hover:text-green-600 transition-all duration-200" to="/">
+                                Home
                             </Link>
                         </li>
                         <li className="nav-item">
-                            <Link className="nav-link" to="/chat">Chat AI</Link>
+                            <Link className="nav-link text-lg font-medium hover:text-green-600 transition-all duration-200" to="/chat">
+                                Chat AI
+                            </Link>
+                        </li>
+                        <li className="nav-item">
+                            <Link className="nav-link text-lg font-medium hover:text-green-600 transition-all duration-200" to="/chat">
+                                Code Editor
+                            </Link>
                         </li>
                     </ul>
                 </div>
-                <div className='d-flex align-items-center m-auto'>
-                    <label className={`pe-2 ${theme == 'light' ? 'text-black' : 'text-white'}`} htmlFor='theme-toggle' >{theme == 'light' ? 'Light ' : 'Dark '}</label>
+
+                {/* Theme Toggle and Profile Section */}
+                <div className="flex items-center space-x-4">
+                    {/* Theme Toggle */}
+                    <label className={`text-lg font-medium ${theme === 'light' ? 'text-gray-800' : 'text-white'}`} htmlFor="theme-toggle">
+                        {theme === 'light' ? 'Light' : 'Dark'}
+                    </label>
                     <Toggle
-                        id='theme-toggle'
+                        id="theme-toggle"
                         checked={theme === 'light'}
                         onChange={({ target }) => changeMainTheme(target)}
-                        icons={{ 'checked': '', 'unchecked': '' }}
+                        icons={{ checked: '', unchecked: '' }}
                         aria-label="Light mode toggle"
                     />
+
                 </div>
             </div>
         </nav>
+
     )
 };
 

@@ -7,7 +7,6 @@ import './styles/App.css'
 import Home from './pages/Home'
 import CodeRoom from './pages/CodeRoom'
 import Chat from './pages/Chat'
-import 'bootswatch/dist/materia/bootstrap.min.css'
 import Header from './components/Header'
 import Footer from './components/Footer'
 import Documentation from './pages/Documentation'
@@ -32,13 +31,7 @@ function App() {
   }, [])
 
 
-  useEffect(() => {
-    if (mainTheme == 'light')
-      document.querySelector('body').style.backgroundColor = "#EEEEEE";
-    else
-      document.querySelector('body').style.backgroundColor = "#242424";
-
-  }, [mainTheme])
+ 
 
 
 
@@ -56,11 +49,12 @@ function App() {
 
 
   return (
+    <div className={`App ${mainTheme === 'light' ? 'bg-gray-100' : 'bg-neutral-900'}`}>
     <Router>
       <Header theme={mainTheme} changeMainTheme={handleMainTheme} />
       <main>
         <Routes>
-          <Route path='/' element={<Home />} />
+          <Route path='/' element={<Home theme={mainTheme} />} />
           <Route path="/editor/:roomId" element={<CodeRoom mainTheme={mainTheme} changeMainTheme={changeMainTheme} />} />
           <Route path="/register" element={<Register />} />
           <Route path="/chat" element={<Chat mainTheme={mainTheme}/>} />
@@ -70,6 +64,7 @@ function App() {
       </main>
       <Footer theme={mainTheme}/>
     </Router>
+    </div>
   )
 }
 

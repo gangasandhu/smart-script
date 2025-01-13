@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import CodeEditor from '../components/CodeEditor';
 import OutputBox from '../components/OutputBox';
-import { getOutputStatus, getOutputToken } from '../services/compileApi';
+// import { getOutputStatus, getOutputToken } from '../services/compileApi';
+import { compileCode } from '../services/compileUtils';
 import languageOptions from '../constants/languageOptions';
-import { ToastContainer, toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
+import { showSuccessToast, showErrorToast } from '../utils/message';
 import "react-toastify/dist/ReactToastify.css";
 import AiEditor from '../components/AiEditor';
 import { getAiSuggestion } from '../services/ai';
@@ -69,75 +71,9 @@ const CodeRoom = ({ mainTheme, changeMainTheme }) => {
     // compile the code inside the editor
     console.log("code: ", value)
     setOutputDetails("")
-    await compileCode(value, selectedLanguage.id, customInput)
+    await compileCode(value, selectedLanguage.id, customInput, setProcessing, setOutputDetails)
   }
 
-  // compile code and generate an output token
-  const compileCode = async (sourceCode, languageId, customInput) => {
-    console.log("selected language", languageId)
-    setProcessing(true)
-    try {
-      const token = await getOutputToken(sourceCode, languageId, customInput)
-      getSubmission(token);
-    } catch (error) {
-      console.log(error);
-      setProcessing(false)
-    }
-  }
-
-  // validate the output token and get the compiled output
-  const getSubmission = async (token) => {
-    try {
-      let response = await getOutputStatus(token)
-      console.log("get submission", response.data)
-      let statusId = response.data.status?.id;
-      // Processed - we have a result
-      if (statusId === 1 || statusId === 2) {
-        // still processing
-        setTimeout(() => {
-          getSubmission(token);
-        }, 2000);
-        return;
-      } else {
-        setProcessing(false);
-        // const out = atob(response.data.stdout)
-        setOutputDetails(response.data);
-        showSuccessToast(`Compiled Successfully!`);
-        console.log("Output", response.data);
-        return;
-      }
-    } catch (error) {
-      console.error(error);
-      setProcessing(false)
-      showErrorToast();
-    }
-  }
-
-  // message after successfully compiling the code
-  const showSuccessToast = (msg) => {
-    toast.success(msg || `Compiled Successfully!`, {
-      position: "top-right",
-      autoClose: 1000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-    });
-  };
-
-  // message for error in compilation
-  const showErrorToast = (msg, timer) => {
-    toast.error(msg || `Something went wrong! Please try again.`, {
-      position: "top-right",
-      autoClose: timer ? timer : 1000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-    });
-  };
 
   // get code suggestion from openai api
   const getCodeSuggestion = async () => {
@@ -156,7 +92,7 @@ const CodeRoom = ({ mainTheme, changeMainTheme }) => {
   }
 
   return (
-    <div data-testid='website'>
+    <div className={`p-8 ${mainTheme === "light" ? "text-gray-800" : "text-gray-100"}`} data-testid="website">
       <ToastContainer
         position="top-right"
         autoClose={2000}
@@ -168,43 +104,71 @@ const CodeRoom = ({ mainTheme, changeMainTheme }) => {
         draggable
         pauseOnHover
       />
-      <div className='editor-bar d-flex justify-content-between align-items-center m-4'>
+      
+      <div className="">Collaborators: {usersInRoom.map(user => user.username).join(', ')}</div>
+
+      {/* Editor Bar */}
+      <div className="editor-bar flex justify-between items-center m-4">
         <EditorConfig
           theme={mainTheme}
           handleLanguageChange={handleLanguageChange}
           handleThemeChange={handleThemeChange}
         />
-        <div className='cta'>
-          <button className='btn btn-success me-2' data-testid='askai' role='ask' onClick={getCodeSuggestion}>AskAI</button>
-          <button className='btn btn-primary' role='link' onClick={runCode}>Run</button>
+
+        {/* CTA Buttons */}
+        <div className="cta flex space-x-2">
+          <button
+            className="px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors"
+            data-testid="askai"
+            role="ask"
+            onClick={getCodeSuggestion}
+          >
+            AskAI
+          </button>
+          <button
+            className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors"
+            role="link"
+            onClick={runCode}
+          >
+            Run
+          </button>
         </div>
       </div>
-      {showSuggestion && <AiEditor
-        selectedLanguage={selectedLanguage.value}
-        selectedTheme={mainTheme}
-        aiValue={aiValue}
-        closeAi={closeAi}
-        copyText={copyText}
-      />}
-      <div className='row'>
-        <div className='text-white'>Collaborators: {usersInRoom.map(user => user.username).join(', ')}</div>
-        <div className='col-lg-8 col-md-8 col-sm-12'>
-          <CodeEditor
-            handleEditorChange={handleEditorChange}
-            selectedLanguage={selectedLanguage.value}
-            selectedTheme={mainTheme}
-            value={value}
-          />
+
+      {/* AI Editor */}
+      {showSuggestion && (
+        <AiEditor
+          selectedLanguage={selectedLanguage.value}
+          selectedTheme={mainTheme}
+          aiValue={aiValue}
+          closeAi={closeAi}
+          copyText={copyText}
+        />
+      )}
+
+
+        <div className="flex flex-col md:flex-row space-x-4 h-[60%]">
+          {/* Code Editor */}
+          <div className="md:w-2/3">
+            <CodeEditor
+              handleEditorChange={handleEditorChange}
+              selectedLanguage={selectedLanguage.value}
+              selectedTheme={mainTheme}
+              value={value}
+            />
+          </div>
+
+          {/* Output Box */}
+          <div className="md:w-1/3" data-testid="compiler">
+            <OutputBox
+              outputDetails={outputDetails}
+              processing={processing}
+              theme={mainTheme}
+            />
+          </div>
         </div>
-        <div className='col-lg-4 col-md-4 col-sm-12' data-testid='compiler'>
-          <OutputBox
-            outputDetails={outputDetails}
-            processing={processing}
-            theme={mainTheme}
-          />
-        </div>
-      </div>
     </div>
+
   )
 }
 

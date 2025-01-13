@@ -5,7 +5,7 @@ const CodeEditor = ({ selectedLanguage, selectedTheme, handleEditorChange, value
     return (
         <div>
             <div className='shadow'>
-                <p className='text-secondary text-start mt-4 p-2'>Code Editor</p>
+                <p className='text-secondary text-start p-2'>Code Editor</p>
                 {/* <hr /> */}
                 <div data-testid='editor'>
                     <Editor
