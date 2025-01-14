@@ -13,6 +13,8 @@ import Documentation from './pages/Documentation'
 import Team from './pages/Team'
 import { useUser } from './context/UserContext'
 import Register from './pages/Register'
+import { getAuthUser } from './api/auth'
+import Login from './pages/Login'
 
 function App() {
 
@@ -22,17 +24,13 @@ function App() {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    const user = JSON.parse(localStorage.getItem("user"))
-    if (user) {
-      setUser(user)
+    const fetchAuthUser = async () => {
+      const data = await getAuthUser()
+      setUser(data)
+      setLoading(false)
     }
-    setLoading(false)
-
+    fetchAuthUser()
   }, [])
-
-
- 
-
 
 
   const handleMainTheme = (target) => {
@@ -49,14 +47,15 @@ function App() {
 
 
   return (
-    <div className={`App ${mainTheme === 'light' ? 'bg-gray-100' : 'bg-neutral-900'}`}>
+    <div className={`min-h-screen ${mainTheme === 'light' ? 'bg-gray-100' : 'bg-neutral-900'}`}>
     <Router>
       <Header theme={mainTheme} changeMainTheme={handleMainTheme} />
       <main>
         <Routes>
           <Route path='/' element={<Home theme={mainTheme} />} />
           <Route path="/editor/:roomId" element={<CodeRoom mainTheme={mainTheme} changeMainTheme={changeMainTheme} />} />
-          <Route path="/register" element={<Register />} />
+          <Route path="/register" element={<Register theme={mainTheme} />} />
+          <Route path="/login" element={<Login theme={mainTheme} />} />
           <Route path="/chat" element={<Chat mainTheme={mainTheme}/>} />
           <Route path="/docs" element={<Documentation />} />
           <Route path="/team" element={<Team />} />

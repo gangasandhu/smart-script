@@ -3,8 +3,10 @@ import { Link } from 'react-router-dom';
 import logo from "../assets/SmartScript-logo.png";
 import Toggle from 'react-toggle';
 import "react-toggle/style.css";
+import { useUser } from '../context/UserContext';
 
 const Header = ({ theme, changeMainTheme }) => {
+    const { user, setUser } = useUser();
     return (
         <nav className={`navbar navbar-expand-lg ${theme === 'light' ? 'bg-white text-neutral-800' : 'bg-neutral-900 text-gray-100'} shadow-md py-3`} data-bs-theme={theme === 'light' ? 'light' : 'dark'}>
             <div className="container-fluid flex justify-between items-center px-4">
@@ -14,7 +16,7 @@ const Header = ({ theme, changeMainTheme }) => {
                     <span className="font-semibold text-2xl ">SmartScript</span>
                 </Link>
 
-            
+
                 {/* Navbar Links */}
                 <div className="hidden md:block md:flex md:items-center md:space-x-8" id="navbarColor02">
                     <ul className="navbar-nav flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-6">
@@ -51,6 +53,11 @@ const Header = ({ theme, changeMainTheme }) => {
                     />
 
                 </div>
+                {user &&
+                    <div className='bg-neutral-800 w-[40px] h-[40px] rounded-full flex items-center justify-center text-white'>
+                            {user.username[0].toUpperCase()}
+                    </div>
+                }
             </div>
         </nav>
 

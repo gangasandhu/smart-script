@@ -14,28 +14,17 @@ import '../styles/home.css';
 import { useParams } from 'react-router-dom';
 import { useUser } from '../context/UserContext';
 import useSocket from '../hooks/useSocket';
+import { createRoomUser } from '../api/roomUser';
+import { getCodeRoom, updateCodeRoom } from '../api/codeRoom';
 
 const CodeRoom = ({ mainTheme, changeMainTheme }) => {
 
-  const { roomId } = useParams();
+  const { roomId } = useParams(); // room id from url
 
+  // user state variable
   const { user } = useUser()
   const { sendUser, joinRoom, getRoomUsers, sendText, getText } = useSocket()
   const [usersInRoom, setUsersInRoom] = useState([])
-
-  useEffect(() => {
-    if (user) {
-      sendUser(user)
-      joinRoom(roomId, user.id)
-      getRoomUsers((users) => {
-        setUsersInRoom(users)
-      })
-      getText((text) => {
-        setValue(text)
-      })
-    }
-  }, [user])
-
 
   // code editor states
   const [value, setValue] = useState("// write your code here");
@@ -48,6 +37,50 @@ const CodeRoom = ({ mainTheme, changeMainTheme }) => {
   // AI suggestion states
   const [showSuggestion, setShowSuggestion] = useState(false);
   const [aiValue, setAiValue] = useState("");
+
+
+  // fetch user data from the server and update the user state
+  useEffect(() => {
+    const setUpRoom = async () => {
+      if (user) {
+        sendUser(user)
+        joinRoom(roomId, user.id)
+        getRoomUsers((users) => {
+          setUsersInRoom(users)
+        })
+        await createRoomUser(roomId, user.id)
+
+        getText((text) => {
+          setValue(text)
+        })
+      }
+    }
+    setUpRoom()
+  }, [user])
+
+
+  // fetch code from the server and update the code every 5 seconds
+  useEffect(() => {
+    const fetchCode = async () => {
+      const { language, content } = await getCodeRoom(roomId)
+      setSelectedLanguage(prev => ({ ...prev, value: language }))
+      setValue(content)
+    }
+    fetchCode()
+  }, [roomId])
+
+  useEffect(() => {
+    const updateCode = async () => {
+      await updateCodeRoom(roomId, { content: value, language: selectedLanguage.value })
+    }
+
+    const interval = setInterval(() => {
+      updateCode()
+    }, 5000)
+
+    return () => clearInterval(interval)
+  }, [roomId, value, selectedLanguage])
+
 
   const handleEditorChange = (value) => {
     // set the value of the code inside the editor
@@ -86,8 +119,10 @@ const CodeRoom = ({ mainTheme, changeMainTheme }) => {
   }
 
   const closeAi = () => setShowSuggestion(false);
-  const copyText = () => {
-    navigator.clipboard.writeText(aiValue);
+
+  // copyText to clipboard
+  const copyText = (value) => {
+    navigator.clipboard.writeText(value);
     showSuccessToast("Copied")
   }
 
@@ -104,8 +139,11 @@ const CodeRoom = ({ mainTheme, changeMainTheme }) => {
         draggable
         pauseOnHover
       />
-      
-      <div className="">Collaborators: {usersInRoom.map(user => user.username).join(', ')}</div>
+
+      <div className='flex justify-between items-center'>
+        {usersInRoom && <div className="">Collaborators: {usersInRoom.map(user => user.username).join(', ')}</div>}
+        <button onClick={() => copyText(roomId)} className='bg-gray-700 px-4 py-2 rounded-md'>Share</button>
+      </div>
 
       {/* Editor Bar */}
       <div className="editor-bar flex justify-between items-center m-4">
@@ -141,32 +179,32 @@ const CodeRoom = ({ mainTheme, changeMainTheme }) => {
           selectedLanguage={selectedLanguage.value}
           selectedTheme={mainTheme}
           aiValue={aiValue}
-          closeAi={closeAi}
+          closeAi={() => closeAi(aiValue)}
           copyText={copyText}
         />
       )}
 
 
-        <div className="flex flex-col md:flex-row space-x-4 h-[60%]">
-          {/* Code Editor */}
-          <div className="md:w-2/3">
-            <CodeEditor
-              handleEditorChange={handleEditorChange}
-              selectedLanguage={selectedLanguage.value}
-              selectedTheme={mainTheme}
-              value={value}
-            />
-          </div>
-
-          {/* Output Box */}
-          <div className="md:w-1/3" data-testid="compiler">
-            <OutputBox
-              outputDetails={outputDetails}
-              processing={processing}
-              theme={mainTheme}
-            />
-          </div>
+      <div className="flex flex-col md:flex-row space-x-4 h-[60%]">
+        {/* Code Editor */}
+        <div className="md:w-2/3">
+          <CodeEditor
+            handleEditorChange={handleEditorChange}
+            selectedLanguage={selectedLanguage.value}
+            selectedTheme={mainTheme}
+            value={value}
+          />
         </div>
+
+        {/* Output Box */}
+        <div className="md:w-1/3" data-testid="compiler">
+          <OutputBox
+            outputDetails={outputDetails}
+            processing={processing}
+            theme={mainTheme}
+          />
+        </div>
+      </div>
     </div>
 
   )

@@ -1,15 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { register } from '../api/auth';
+import { login, getAuthUser } from '../api/auth';
 import { useUser } from '../context/UserContext';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
-const Register = ({theme}) => {
+const Login = ({theme}) => {
 
     const { user, setUser } = useUser();
     const navigate = useNavigate();
 
     const [formData, setFormData] = useState({
-        username: '',
         email: '',
         password: '',
     });
@@ -34,11 +33,9 @@ const Register = ({theme}) => {
     // Validate form data
     const validate = () => {
         const newErrors = {};
-        if (!formData.username) newErrors.username = 'Username is required';
         if (!formData.email) newErrors.email = 'Email is required';
         else if (!/\S+@\S+\.\S+/.test(formData.email)) newErrors.email = 'Email is invalid';
         if (!formData.password) newErrors.password = 'Password is required';
-        else if (formData.password.length < 6) newErrors.password = 'Password must be at least 6 characters long';
 
         setErrors(newErrors);
         return Object.keys(newErrors).length === 0;
@@ -51,11 +48,13 @@ const Register = ({theme}) => {
             setIsSubmitting(true);
             console.log('User data submitted:', formData);
             try {
-                const userRegistered = await register(formData);
-                setUser(userRegistered);
-                setSuccessMessage('Registration successful');
+                await login(formData);  // Assuming login API call
+                const userLoggedIn = await getAuthUser();
+
+                setUser(userLoggedIn);
+                setSuccessMessage('Login successful');
             } catch (error) {
-                setErrors({ ...errors, general: 'Registration failed. Please try again' });
+                setErrors({ ...errors, general: 'Invalid credentials. Please try again' });
             } finally {
                 setIsSubmitting(false);
             }
@@ -64,24 +63,10 @@ const Register = ({theme}) => {
 
     return (
         <div className={`flex justify-center items-center min-h-screen ${theme === "light" ? "bg-gray-100 text-gray-800" : "bg-neutral-800 text-gray-100"}`}>
-
             <div className="w-full max-w-md p-8 rounded-lg shadow-lg">
                 <h2 className="text-2xl font-bold text-center mb-6">Create an Account</h2>
                 <form onSubmit={handleSubmit}>
-                    <div className="mb-4">
-                        <label htmlFor="username" className="block text-sm font-semibold">Username</label>
-                        <input
-                            type="text"
-                            id="username"
-                            name="username"
-                            value={formData.username}
-                            onChange={handleChange}
-                            className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                            placeholder="Username"
-                        />
-                        {errors.username && <p className="text-red-500 text-xs mt-1">{errors.username}</p>}
-                    </div>
-
+                    
                     <div className="mb-4">
                         <label htmlFor="email" className="block text-sm font-semibold">Email</label>
                         <input
@@ -115,12 +100,13 @@ const Register = ({theme}) => {
                         className={`w-full px-4 py-2 text-white bg-blue-500 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 ${isSubmitting && 'opacity-50 cursor-not-allowed'}`}
                         disabled={isSubmitting}
                     >
-                        {isSubmitting ? 'Registering...' : 'Register'}
+                        {isSubmitting ? 'Submitting...' : 'Login'}
                     </button>
                 </form>
+                <p>Didn't Create account? <Link className='text-blue-500' to={"/register"}>Register</Link></p>
             </div>
         </div>
     );
 };
 
-export default Register;
+export default Login;

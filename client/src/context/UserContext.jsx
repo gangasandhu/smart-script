@@ -5,7 +5,7 @@ const UserContext = createContext();
 
 // UserProvider wraps the app to provide user data to all components
 export const UserProvider = ({ children }) => {
-  const [user, setUser] = useState({}); // Initialize user state
+  const [user, setUser] = useState(null); // Initialize user state
 
   return (
     <UserContext.Provider value={{ user, setUser }}>
