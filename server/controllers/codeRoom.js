@@ -17,7 +17,7 @@ codeRoomRouter.get('/', async (req, res) => {
 codeRoomRouter.get('/user/:user_id', async (req, res) => {
     const { user_id } = req.params;
     try {
-        const result = await db.query('SELECT coderooms.id, coderooms.content, coderooms.language FROM coderooms JOIN room_collaborators ON coderooms.id = room_collaborators.room_id WHERE room_collaborators.user_id = $1', [user_id]);
+        const result = await db.query('SELECT coderooms.id, coderooms.name, coderooms.content, coderooms.language FROM coderooms JOIN room_collaborators ON coderooms.id = room_collaborators.room_id WHERE room_collaborators.user_id = $1 ORDER BY coderooms.updated_at DESC', [user_id]);
         const codes = result.rows;
         res.status(200).json(codes);
     } catch (err) {
@@ -52,9 +52,9 @@ codeRoomRouter.get('/:id', async (req, res) => {
 
 codeRoomRouter.put('/:id', async (req, res) => {
     const { id } = req.params;
-    const { content, language } = req.body;
+    const { name, content, language } = req.body;
     try {
-        const result = await db.query('UPDATE coderooms SET content = $1, language = $2 WHERE id = $3 RETURNING *', [content, language, id]);
+        const result = await db.query('UPDATE coderooms SET name = $1, content = $2, language = $3 WHERE id = $4 RETURNING *', [name, content, language, id]);
         const code = result.rows[0];
         if (!code) {
             return res.status(404).json({ error: 'Code Room not found' });

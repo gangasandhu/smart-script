@@ -18,8 +18,6 @@ const useSocket = () => {
     }
 
     const sendText = (text, roomId) => {
-        console.log("text sent", text, roomId)
-
         socket.emit("text", text, roomId);
     }
 
@@ -27,7 +25,15 @@ const useSocket = () => {
         socket.on("text", cb);
     }
 
-    return { socket, sendUser, joinRoom, getRoomUsers, sendText, getText };
+    const sendLanguage = (language, roomId) => {
+        socket.emit("language", language, roomId);
+    }
+
+    const getLanguage = (cb) => {
+        socket.on("language", cb);
+    }
+
+    return { socket, sendUser, joinRoom, getRoomUsers, sendText, getText, sendLanguage, getLanguage };
 }
 
 export default useSocket;

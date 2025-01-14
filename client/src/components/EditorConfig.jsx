@@ -5,7 +5,7 @@ import languageOptions from '../constants/languageOptions';
 import { customStyles } from '../constants/customStyles';
 // import '../styles/editor-config.css';
 
-const EditorConfig = ({ theme, handleLanguageChange, handleThemeChange }) => {
+const EditorConfig = ({ language, theme, handleLanguageChange, handleThemeChange }) => {
     return (
         <div className="mb-4 w-[80%] md:w-[30%]">
             {/* Language Selection */}
@@ -18,6 +18,7 @@ const EditorConfig = ({ theme, handleLanguageChange, handleThemeChange }) => {
                         placeholder="Filter By Category"
                         options={languageOptions}
                         styles={customStyles}
+                        value={language}
                         defaultValue={languageOptions[0]}
                         onChange={(selectedOption) => handleLanguageChange(selectedOption)}
                     />

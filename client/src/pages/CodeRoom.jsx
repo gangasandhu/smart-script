@@ -20,10 +20,11 @@ import { getCodeRoom, updateCodeRoom } from '../api/codeRoom';
 const CodeRoom = ({ mainTheme, changeMainTheme }) => {
 
   const { roomId } = useParams(); // room id from url
+  const [roomName, setRoomName] = useState("")
 
   // user state variable
   const { user } = useUser()
-  const { sendUser, joinRoom, getRoomUsers, sendText, getText } = useSocket()
+  const { sendUser, joinRoom, getRoomUsers, sendText, getText, sendLanguage, getLanguage } = useSocket()
   const [usersInRoom, setUsersInRoom] = useState([])
 
   // code editor states
@@ -53,25 +54,30 @@ const CodeRoom = ({ mainTheme, changeMainTheme }) => {
         getText((text) => {
           setValue(text)
         })
+        getLanguage((language) => {
+          setSelectedLanguage(languageOptions.find(lang => lang.value === language))
+        })
       }
     }
     setUpRoom()
   }, [user])
 
 
-  // fetch code from the server and update the code every 5 seconds
+  // fetch code from the server
   useEffect(() => {
     const fetchCode = async () => {
-      const { language, content } = await getCodeRoom(roomId)
-      setSelectedLanguage(prev => ({ ...prev, value: language }))
+      const { name, language, content } = await getCodeRoom(roomId)
+      setRoomName(name)
+      setSelectedLanguage(languageOptions.find(lang => lang.value === language))
       setValue(content)
     }
     fetchCode()
   }, [roomId])
 
+  // update the code every 5 seconds
   useEffect(() => {
     const updateCode = async () => {
-      await updateCodeRoom(roomId, { content: value, language: selectedLanguage.value })
+      await updateCodeRoom(roomId, { name: roomName, content: value, language: selectedLanguage.value })
     }
 
     const interval = setInterval(() => {
@@ -79,7 +85,7 @@ const CodeRoom = ({ mainTheme, changeMainTheme }) => {
     }, 5000)
 
     return () => clearInterval(interval)
-  }, [roomId, value, selectedLanguage])
+  }, [roomId, roomName, value, selectedLanguage])
 
 
   const handleEditorChange = (value) => {
@@ -96,7 +102,7 @@ const CodeRoom = ({ mainTheme, changeMainTheme }) => {
 
   const handleLanguageChange = (langObj) => {
     console.log(langObj)
-    setValue(`// write your ${langObj.value} code here`);
+    sendLanguage(langObj.value, roomId)
     setSelectedLanguage(langObj);
   }
 
@@ -142,12 +148,13 @@ const CodeRoom = ({ mainTheme, changeMainTheme }) => {
 
       <div className='flex justify-between items-center'>
         {usersInRoom && <div className="">Collaborators: {usersInRoom.map(user => user.username).join(', ')}</div>}
-        <button onClick={() => copyText(roomId)} className='bg-gray-700 px-4 py-2 rounded-md'>Share</button>
+        <button onClick={() => copyText(roomId)} className='bg-gray-700 px-4 py-2 rounded-md text-gray-100'>Share</button>
       </div>
 
       {/* Editor Bar */}
-      <div className="editor-bar flex justify-between items-center m-4">
+      <div className="editor-bar flex justify-between items-center my-4">
         <EditorConfig
+          language={selectedLanguage}
           theme={mainTheme}
           handleLanguageChange={handleLanguageChange}
           handleThemeChange={handleThemeChange}
@@ -184,7 +191,10 @@ const CodeRoom = ({ mainTheme, changeMainTheme }) => {
         />
       )}
 
-
+      <div className='flex items-center space-x-4'>
+        <div>File: <input className='py-1 px-4 rounded-md bg-neutral-700 text-white' type='text' value={roomName} onChange={(e) => setRoomName(e.target.value)} /></div>
+        <div>Language: {selectedLanguage.value}</div>
+      </div>
       <div className="flex flex-col md:flex-row space-x-4 h-[60%]">
         {/* Code Editor */}
         <div className="md:w-2/3">

@@ -30,13 +30,23 @@ export const setupSocket = (server) => {
             io.to(roomId).emit("room users", usersInRoom);
             console.log("users in room", usersInRoom);
             if (roomData[roomId]) {
-                socket.emit("text", roomData[roomId]);
+                socket.emit("text", roomData[roomId].content);
+                socket.emit("language", roomData[roomId].language);
             }
         });
 
         socket.on("text", (text, roomId) => {
-            roomData[roomId] = text;
+            if (roomData[roomId]) roomData[roomId]["content"] = text;
+            else roomData[roomId] = { content: text };
+            console.log("room data", roomData);
             io.to(roomId).emit("text", text);
+        });
+
+        socket.on("language", (language, roomId) => {
+            if (roomData[roomId]) roomData[roomId]["language"] = language;
+            else roomData[roomId] = { language };
+            console.log("room data", roomData);
+            io.to(roomId).emit("language", language);
         });
 
         socket.on("disconnect", () => {
