@@ -8,7 +8,7 @@ import { useUser } from '../context/UserContext';
 const Header = ({ theme, changeMainTheme }) => {
     const { user, setUser } = useUser();
     return (
-        <nav className={`navbar navbar-expand-lg ${theme === 'light' ? 'bg-white text-neutral-800' : 'bg-neutral-900 text-gray-100'} shadow-md py-3`} data-bs-theme={theme === 'light' ? 'light' : 'dark'}>
+        <nav className={`navbar navbar-expand-lg bg-bgTertiary text-primary shadow-md py-3`} >
             <div className="container-fluid flex justify-between items-center px-4">
                 {/* Logo Section */}
                 <Link className="flex items-center space-x-2" to="/">
@@ -41,7 +41,7 @@ const Header = ({ theme, changeMainTheme }) => {
                 {/* Theme Toggle and Profile Section */}
                 <div className="flex items-center space-x-4">
                     {/* Theme Toggle */}
-                    <label className={`text-lg font-medium ${theme === 'light' ? 'text-gray-800' : 'text-white'}`} htmlFor="theme-toggle">
+                    <label className={`text-lg font-medium}`} htmlFor="theme-toggle">
                         {theme === 'light' ? 'Light' : 'Dark'}
                     </label>
                     <Toggle
@@ -54,7 +54,7 @@ const Header = ({ theme, changeMainTheme }) => {
 
                 </div>
                 {user &&
-                    <div className='bg-neutral-800 w-[40px] h-[40px] rounded-full flex items-center justify-center text-white'>
+                    <div className='bg-neutral-700 w-[40px] h-[40px] rounded-full flex items-center justify-center text-white'>
                             {user.username[0].toUpperCase()}
                     </div>
                 }

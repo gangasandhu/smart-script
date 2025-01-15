@@ -7,20 +7,33 @@
   line-height: 1.5;
   font-weight: 400;
 
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-
+ 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
+
 }
 
+.dark {
+  --bg-color: 18, 18, 18;
+  --bg-color-secondary: 38, 38, 38;
+  --bg-color-tertiary: 28, 28, 28;
+  --primary-color: 255, 255, 255;
+  --secondary-color: 150, 150, 150;
+}
+
+.light {
+  --bg-color: 245, 245, 245;
+  --bg-color-secondary: 235, 235, 235;
+  --bg-color-tertiary: 225, 225, 225;
+  --primary-color: 18, 18, 18;
+  --secondary-color: 48, 48, 48;
+}
 
 body {
   margin: 0;
-
-  background-color: #1a1a1a;
 }
 
 h1 {

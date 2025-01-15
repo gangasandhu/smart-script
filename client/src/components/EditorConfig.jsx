@@ -1,16 +1,39 @@
 import React from 'react';
 import Select from 'react-select';
-import themeOptions from '../constants/themeOptions';
 import languageOptions from '../constants/languageOptions';
-import { customStyles } from '../constants/customStyles';
 // import '../styles/editor-config.css';
 
 const EditorConfig = ({ language, theme, handleLanguageChange }) => {
+    const customStyles = {
+        control: (base) => ({
+            ...base,
+            backgroundColor: theme === 'dark' ? 'rgba(35, 35, 35)' : '#ffffff',
+            borderColor: theme === 'dark' ? '#4b5563' : '#d1d5db',
+            color: theme === 'dark' ? '#ffffff' : '#1f2937',
+        }),
+        menu: (base) => ({
+            ...base,
+            backgroundColor: theme === 'dark' ? 'rgba(35, 35, 35)' : '#ffffff',
+        }),
+        option: (base, state) => ({
+            ...base,
+            backgroundColor: state.isFocused
+                ? theme === 'dark'
+                    ? 'rgba(55, 55, 55)'
+                    : '#e5e7eb'
+                : 'transparent',
+            color: theme === 'dark' ? '#ffffff' : '#1f2937',
+        }),
+        singleValue: (base) => ({
+            ...base,
+            color: theme === 'dark' ? '#ffffff' : '#1f2937',
+        }),
+    };
     return (
         <div className="mb-4 w-[80%] md:w-[30%]">
             {/* Language Selection */}
             <div className="flex-col" data-testid="language">
-                <label className={`block mb-2 text-lg font-medium ${theme === 'light' ? 'text-black' : 'text-white'}`} htmlFor="languageSelect">
+                <label className={`block mb-2 text-lg`} htmlFor="languageSelect">
                     Select Language:
                 </label>
                 <div data-testid="language-tab">
@@ -24,21 +47,6 @@ const EditorConfig = ({ language, theme, handleLanguageChange }) => {
                     />
                 </div>
             </div>
-
-            {/* Theme Selection */}
-            {/* <div className="me-4 flex-1" data-testid="theme">
-                <label className={`block mb-2 text-lg font-medium ${theme === 'light' ? 'text-black' : 'text-white'}`} htmlFor="themeSelect">
-                    Select Theme:
-                </label>
-                <div data-testid="theme-tab">
-                    <Select
-                        options={themeOptions}
-                        styles={customStyles}
-                        defaultValue={themeOptions[0]}
-                        onChange={(selectedOption) => handleThemeChange(selectedOption)}
-                    />
-                </div>
-            </div> */}
         </div>
     )
 }

@@ -18,7 +18,7 @@ import { createRoomUser } from '../api/roomUser';
 import { getCodeRoom, updateCodeRoom } from '../api/codeRoom';
 import ChatBox from '../components/ChatBox';
 
-const CodeRoom = ({ mainTheme, changeMainTheme }) => {
+const CodeRoom = ({ mainTheme }) => {
 
   const { roomId } = useParams(); // room id from url
   const [roomName, setRoomName] = useState("")
@@ -133,7 +133,7 @@ const CodeRoom = ({ mainTheme, changeMainTheme }) => {
   }
 
   return (
-    <div className={`p-8 ${mainTheme === "light" ? "text-gray-800" : "text-gray-100"}`} data-testid="website">
+    <div className="p-8 text-primary" data-testid="website">
       <ToastContainer
         position="top-right"
         autoClose={2000}
@@ -155,7 +155,7 @@ const CodeRoom = ({ mainTheme, changeMainTheme }) => {
       <div className="editor-bar flex justify-between items-center my-4">
 
         <div className='flex items-center space-x-4'>
-          <div>File: <input className='py-1 px-4 rounded-md bg-neutral-700 text-white' type='text' value={roomName} onChange={(e) => setRoomName(e.target.value)} /></div>
+          <div>File: <input className='py-1 px-4 rounded-md bg-bgSecondary' type='text' value={roomName} onChange={(e) => setRoomName(e.target.value)} /></div>
           <div>Language: {selectedLanguage.value}</div>
         </div>
 
@@ -211,8 +211,8 @@ const CodeRoom = ({ mainTheme, changeMainTheme }) => {
           />
         </div>
 
-        <div className=' md:w-1/3 flex flex-1 flex-col'>
-          <p className="text-secondary text-start p-2">Chat</p>
+        <div className=' md:w-1/3 flex flex-1 flex-col bg-bgSecondary/50 shadow-lg'>
+          <p className="text-primary text-start p-2">Chat</p>
           <ChatBox roomId={roomId} />
         </div>
 
