@@ -49,6 +49,11 @@ export const setupSocket = (server) => {
             io.to(roomId).emit("language", language);
         });
 
+        socket.on("message", (message, roomId, user) => {
+            io.to(roomId).emit("message", message, user);
+        }  
+        )
+
         socket.on("disconnect", () => {
             let disconnectedUser = null;
       

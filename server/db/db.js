@@ -46,4 +46,14 @@ db.query(`
     )
 `);
 
+db.query(`
+    CREATE TABLE IF NOT EXISTS messages (
+    id SERIAL PRIMARY KEY,
+    room_id VARCHAR(255) REFERENCES coderooms (id) ON DELETE CASCADE,
+    user_id INT REFERENCES users (id) ON DELETE CASCADE,
+    content TEXT NOT NULL,
+    created_at TIMESTAMP DEFAULT NOW()
+    )
+`);
+
 export default db;

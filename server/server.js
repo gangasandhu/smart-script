@@ -6,6 +6,7 @@ import userRouter from './controllers/user.js';
 import authRouter from './controllers/auth.js';
 import codeRoomRouter from './controllers/codeRoom.js';
 import roomUserRouter from './controllers/roomUser.js';
+import messageRouter from './controllers/message.js';
 
 const app = express();
 const server = createServer(app);
@@ -23,6 +24,7 @@ app.use('/users', userRouter);
 app.use('/auth', authRouter);
 app.use('/codeRooms', codeRoomRouter);
 app.use('/room-users', roomUserRouter);
+app.use('/messages', messageRouter);
 
 server.listen(3000, () => {
     console.log('Server is running on port 3000');

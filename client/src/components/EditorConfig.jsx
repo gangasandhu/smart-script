@@ -5,7 +5,7 @@ import languageOptions from '../constants/languageOptions';
 import { customStyles } from '../constants/customStyles';
 // import '../styles/editor-config.css';
 
-const EditorConfig = ({ language, theme, handleLanguageChange, handleThemeChange }) => {
+const EditorConfig = ({ language, theme, handleLanguageChange }) => {
     return (
         <div className="mb-4 w-[80%] md:w-[30%]">
             {/* Language Selection */}

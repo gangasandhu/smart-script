@@ -33,7 +33,15 @@ const useSocket = () => {
         socket.on("language", cb);
     }
 
-    return { socket, sendUser, joinRoom, getRoomUsers, sendText, getText, sendLanguage, getLanguage };
+    const sendMessage = (message, roomId, user) => {
+        socket.emit("message", message, roomId, user);
+    }
+
+    const getMessage = (cb) => {
+        socket.on("message", cb);
+    }
+
+    return { socket, sendUser, joinRoom, getRoomUsers, sendText, getText, sendLanguage, getLanguage, sendMessage, getMessage };
 }
 
 export default useSocket;
