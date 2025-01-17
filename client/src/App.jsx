@@ -19,7 +19,7 @@ import Login from './pages/Login'
 function App() {
 
   const { user, setUser } = useUser()
-  const [mainTheme, setMainTheme] = useState("vs-dark")
+  const [mainTheme, setMainTheme] = useState("dark")
 
   const [loading, setLoading] = useState(true)
 
@@ -34,7 +34,7 @@ function App() {
 
 
   const handleMainTheme = (target) => {
-    setMainTheme(target.checked ? "light" : "vs-dark")
+    setMainTheme(target.checked ? "light" : "dark")
   }
 
   const changeMainTheme = (th) => {
@@ -47,13 +47,13 @@ function App() {
 
 
   return (
-    <div className={`min-h-screen ${mainTheme === 'light' ? 'bg-gray-100' : 'bg-neutral-900'}`}>
+    <div className={`min-h-screen ${mainTheme} bg-background`}>
     <Router>
       <Header theme={mainTheme} changeMainTheme={handleMainTheme} />
       <main>
         <Routes>
-          <Route path='/' element={<Home theme={mainTheme} />} />
-          <Route path="/editor/:roomId" element={<CodeRoom mainTheme={mainTheme} changeMainTheme={changeMainTheme} />} />
+          <Route path='/' element={<Home />} />
+          <Route path="/editor/:roomId" element={<CodeRoom mainTheme={mainTheme} />} />
           <Route path="/register" element={<Register theme={mainTheme} />} />
           <Route path="/login" element={<Login theme={mainTheme} />} />
           <Route path="/chat" element={<Chat mainTheme={mainTheme}/>} />

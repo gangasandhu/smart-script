@@ -3,7 +3,7 @@ import { register } from '../api/auth';
 import { useUser } from '../context/UserContext';
 import { useNavigate } from 'react-router-dom';
 
-const Register = ({theme}) => {
+const Register = () => {
 
     const { user, setUser } = useUser();
     const navigate = useNavigate();
@@ -63,9 +63,9 @@ const Register = ({theme}) => {
     };
 
     return (
-        <div className={`flex justify-center items-center min-h-screen ${theme === "light" ? "bg-gray-100 text-gray-800" : "bg-neutral-800 text-gray-100"}`}>
+        <div className="flex justify-center items-center min-h-screen text-primary">
 
-            <div className="w-full max-w-md p-8 rounded-lg shadow-lg">
+            <div className="w-full max-w-md p-8 rounded-lg shadow-lg bg-bgSecondary">
                 <h2 className="text-2xl font-bold text-center mb-6">Create an Account</h2>
                 <form onSubmit={handleSubmit}>
                     <div className="mb-4">
@@ -76,7 +76,7 @@ const Register = ({theme}) => {
                             name="username"
                             value={formData.username}
                             onChange={handleChange}
-                            className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            className="w-full px-4 py-2 border rounded-md bg-bgTertiary focus:outline-none focus:ring-2 focus:ring-blue-500"
                             placeholder="Username"
                         />
                         {errors.username && <p className="text-red-500 text-xs mt-1">{errors.username}</p>}
@@ -90,7 +90,7 @@ const Register = ({theme}) => {
                             name="email"
                             value={formData.email}
                             onChange={handleChange}
-                            className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            className="w-full px-4 py-2 border rounded-md bg-bgTertiary focus:outline-none focus:ring-2 focus:ring-blue-500"
                             placeholder="Email"
                         />
                         {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email}</p>}
@@ -104,7 +104,7 @@ const Register = ({theme}) => {
                             name="password"
                             value={formData.password}
                             onChange={handleChange}
-                            className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            className="w-full px-4 py-2 border rounded-md bg-bgTertiary focus:outline-none focus:ring-2 focus:ring-blue-500"
                             placeholder="Password"
                         />
                         {errors.password && <p className="text-red-500 text-xs mt-1">{errors.password}</p>}

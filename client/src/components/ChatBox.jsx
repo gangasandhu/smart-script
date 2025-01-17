@@ -61,7 +61,7 @@ const ChatBox = ({ roomId }) => {
 
     // const messages = 
     return (
-        <div className='h-[60vh] bg-neutral-800/30' >
+        <div className='h-[60vh] bg-bgSecondary shadow-lg' >
             <div className='messages h-[90%] overflow-y-auto'>
                 <div className='flex flex-col space-y-2 p-4'>
                     {messages.map((message, index) => (
@@ -70,15 +70,15 @@ const ChatBox = ({ roomId }) => {
                                 {message.username[0].toUpperCase()}
                             </div>
                             <div className='flex flex-col'>
-                                <p className='text-white'>{message.username}</p>
-                                <p className='text-sm text-gray-400'>{message.content}</p>
+                                <p className='text-secondary'>{message.username}</p>
+                                <p className='text-sm text-primary'>{message.content}</p>
                             </div>
                         </div>
                     ))}
                 </div>
             </div>
             <div className='flex items-center justify-center h-10 space-x-2'>
-                <input onChange={(e) => setMessage(e.target.value)} value={message} className='w-4/5 p-2 rounded-md bg-neutral-700 text-white' type='text' placeholder='Type a message...' />
+                <input onChange={(e) => setMessage(e.target.value)} value={message} className='w-4/5 p-2 rounded-md bg-background text-primary' type='text' placeholder='Type a message...' />
                 <button onClick={sendMessageToServer} className='bg-blue-600 text-white px-4 py-2 rounded-md'>Send</button>
             </div>
         </div >
