@@ -1,8 +1,0 @@
-services:
-  app:
-    image: smart-script-app
-    build: .
-    ports:
-      - "8000:80"
-    env_file:
-      - .env
