@@ -26,7 +26,7 @@ services:
   client:
     build: ./client
     ports:
-      - "8080:80"
+      - "80:80"
     env_file:
       - ./client/.env
     depends_on:
